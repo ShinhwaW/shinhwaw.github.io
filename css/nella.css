@@ -54,7 +54,7 @@ pre { text-align: normal }
 header { min-height: 60px }
 header .logo-link { float: left }
 header .nav { float: right; left: 80px }
-header .logo-link img { height: 60px; float: left }
+header .logo-link img { height: 60px }
 header .nav-list-item { display: inline-block; padding: 19px 10px }
 header .nav-list-item a { font-size: 17px; line-height: 1.4 }
 header ul.nav-fix-list-child { display: none }
