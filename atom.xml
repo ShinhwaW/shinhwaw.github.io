@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-26T09:51:53.589Z</updated>
+  <updated>2019-03-26T14:08:48.864Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,231 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode 206. Reverse Linked List</title>
+    <link href="http://yoursite.com/2019/02/26/leetcode-206-reverse-linked-list/"/>
+    <id>http://yoursite.com/2019/02/26/leetcode-206-reverse-linked-list/</id>
+    <published>2019-02-26T13:44:24.000Z</published>
+    <updated>2019-03-26T14:08:48.864Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目来源：<a href="https://leetcode.com/problems/reverse-linked-list/" target="_blank" rel="noopener">https://leetcode.com/problems/reverse-linked-list/</a></p><p>标记难度：Easy<br><a id="more"></a></p><p>提交次数：1/?</p><p>代码效率：100%</p><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>单链表反转</p><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>迭代法：将当前节点的后继节点指向前一个节点，移动当前节点</p><p>递归法</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>迭代法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        ListNode newHead = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">while</span>(head != <span class="keyword">null</span>)&#123;</span><br><span class="line">            ListNode next = head.next;</span><br><span class="line">            head.next = newHead;</span><br><span class="line">            newHead = head;</span><br><span class="line">            head = next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newHead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>递归法</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="Nonesense"><a href="#Nonesense" class="headerlink" title="Nonesense"></a>Nonesense</h3><p>最简单的单链表居然花费了我半天的时间，最后还是参考别人的答案才写出来。。。智商捉急</p><p>总结一下问题：</p><ul><li>太急躁，要静下心来慢慢梳理过程，整理成代码输出</li><li><strong>java变量指针等概念感觉还是不清晰</strong>，今天抽空需要补一下</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题目来源：&lt;a href=&quot;https://leetcode.com/problems/reverse-linked-list/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode.com/problems/reverse-linked-list/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;标记难度：Easy&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 448 Find All Numbers Disappeared in an Array</title>
+    <link href="http://yoursite.com/2019/02/24/leetcode-448-find-all-numbers-disappeared-in-an-array/"/>
+    <id>http://yoursite.com/2019/02/24/leetcode-448-find-all-numbers-disappeared-in-an-array/</id>
+    <published>2019-02-24T13:44:24.000Z</published>
+    <updated>2019-03-26T14:07:18.820Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目来源：<a href="https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/" target="_blank" rel="noopener">https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/</a></p><p>标记难度：Easy<br><a id="more"></a><br>提交次数：1/N</p><p>代码效率： 95.58%</p><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>给定一个长度为N整形数组，元素取值 范围从1到N，其中有可能有重复出现两次的元素，找出丢失的元素：</p><p><strong>Example:</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input:</span><br><span class="line">[4,3,2,7,8,2,3,1]</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">[5,6]</span><br></pre></td></tr></table></figure><h3 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h3><p>取负法：不管一个元素出现一次还是两次，只要出现它对应的位置就会被取负。当某个元素不出现的时候，该元素对应的位置始终访问不到，所以还是正值，通过这种方法我们就可以找到哪些元素没有出现</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">findDisappearedNumbers</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; nums.length;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> val = Math.abs(nums[i]) - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[val] &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            nums[val] = -nums[val];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j&lt;nums.length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[j] &gt;<span class="number">0</span>)&#123;</span><br><span class="line">                list.add(j+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="一些废话"><a href="#一些废话" class="headerlink" title="一些废话"></a>一些废话</h3><p>感觉这个题就是单纯考虑数学技巧，做起来比较吃力，看答案的时候豁然开朗，还是慢慢积累吧。。。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题目来源：&lt;a href=&quot;https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;标记难度：Easy&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 283 Move Zeroes</title>
+    <link href="http://yoursite.com/2019/02/23/leetcode-283-move-zeroes/"/>
+    <id>http://yoursite.com/2019/02/23/leetcode-283-move-zeroes/</id>
+    <published>2019-02-23T13:44:24.000Z</published>
+    <updated>2019-03-26T14:05:53.293Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目来源：<a href="https://leetcode.com/problems/move-zeroes/" target="_blank" rel="noopener">https://leetcode.com/problems/move-zeroes/</a><br><a id="more"></a><br>标记难度：Easy</p><p>提交次数：1/N</p><p>代码效率：100%</p><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>给定一个整形数组，将0都移动到最后，保持其他数组相对位置不变</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: [0,1,0,3,12]</span><br><span class="line">Output: [1,3,12,0,0</span><br></pre></td></tr></table></figure><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>一个快指针，一个慢指针，快指针指向不为0的元素，快慢指针值交换，同时向后移动一位。这样可以保证下面两个条件：</p><ul><li>快慢指针之间的元素都是0</li><li>慢指针之前的元素都不为0</li></ul><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> tmp =<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; nums.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]!=<span class="number">0</span>)&#123;</span><br><span class="line">                tmp = nums[i];</span><br><span class="line">                nums[i] = nums[j];</span><br><span class="line">                nums[j] = tmp;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="一些废话"><a href="#一些废话" class="headerlink" title="一些废话"></a>一些废话</h3><p>一开始理解错误，以为把0都放到后面之后还是要对前面从大到小进行排序。。。结果想了半天</p><p>以后还是要仔细审题，不要怀疑自己，先用自己的想法暴力实现</p><p>写代码之前可以举个栗子来一步一步推敲，想好边界和规律再写代码</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题目来源：&lt;a href=&quot;https://leetcode.com/problems/move-zeroes/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode.com/problems/move-zeroes/&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 136. Single Number</title>
+    <link href="http://yoursite.com/2019/02/22/leetcode-136-single-number/"/>
+    <id>http://yoursite.com/2019/02/22/leetcode-136-single-number/</id>
+    <published>2019-02-22T13:44:24.000Z</published>
+    <updated>2019-03-26T14:05:49.775Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目来源： <a href="https://leetcode.com/problems/single-number/" target="_blank" rel="noopener">https://leetcode.com/problems/single-number/</a><br><a id="more"></a><br>标记难度：Easy</p><p>提交次数：1/N</p><p>代码效率：100.00%</p><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>给定一个非空数组，除了唯一个单独的元素外，每个元素出现两次。找出这个单独的元素。</p><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>使用异或 <code>^</code></p><ul><li>两个相同的数异或后为0</li><li>0和一个数异或后为那个数</li><li>异或运算满足交换律</li></ul><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt; nums.length;i++)&#123;</span><br><span class="line">            result^=nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题目来源： &lt;a href=&quot;https://leetcode.com/problems/single-number/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode.com/problems/single-number/&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 226. Invert Binary Tree</title>
+    <link href="http://yoursite.com/2019/02/21/leetcode-226-invert-binary-tree/"/>
+    <id>http://yoursite.com/2019/02/21/leetcode-226-invert-binary-tree/</id>
+    <published>2019-02-21T13:44:24.000Z</published>
+    <updated>2019-03-26T14:03:06.976Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目来源： <a href="https://leetcode.com/problems/invert-binary-tree/" target="_blank" rel="noopener">https://leetcode.com/problems/invert-binary-tree/</a></p><p>标记难度：Easy<br><a id="more"></a><br>提交次数：1/ N</p><p>代码效率：100.00%</p><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>反转二叉树左右子树</p><p>Input:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">     4</span><br><span class="line">   /   \</span><br><span class="line">  2     7</span><br><span class="line"> / \   / \</span><br><span class="line">1   3 6   9</span><br></pre></td></tr></table></figure><p>Output:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">     4</span><br><span class="line">   /   \</span><br><span class="line">  7     2</span><br><span class="line"> / \   / \</span><br><span class="line">9   6 3   1</span><br></pre></td></tr></table></figure><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>左子树和右子树递归互换</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">invertTree</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        TreeNode tmp = root.left;</span><br><span class="line">        root.left = invertTree(root.right);</span><br><span class="line">        root.right = invertTree(tmp);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>对递归还是理解不透彻，总结一下如何处理递归问题：</p><blockquote><p>那该如何理解递归代码呢？如果一个问题A可以分解为若干个子问题B、C、D，你可以假设子问题B、C、D已经解决。而且，你只需要思考问题A与子问题B、C、D两层之间的关系即可，不需要一层层往下思考子问题与子子问题，子子问题与子子子问题之间的关系。屏蔽掉递归细节，这样子理解起来就简单多了。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题目来源： &lt;a href=&quot;https://leetcode.com/problems/invert-binary-tree/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode.com/problems/invert-binary-tree/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;标记难度：Easy&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 104. Maximum Depth of Binary Tree</title>
+    <link href="http://yoursite.com/2019/02/20/leetcode-104-maximum-depth-of-binary-tree/"/>
+    <id>http://yoursite.com/2019/02/20/leetcode-104-maximum-depth-of-binary-tree/</id>
+    <published>2019-02-20T13:44:24.000Z</published>
+    <updated>2019-03-26T14:02:44.637Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目来源：<a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/" target="_blank" rel="noopener">https://leetcode.com/problems/maximum-depth-of-binary-tree/</a></p><p>标记难度：Easy<br><a id="more"></a><br>提交次数：思路很乱，参考 Discuss 的答案</p><p>代码效率：100.00%</p><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>计算二叉树的深度</p><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>递归左右子树，对深度最大的子树进行递归调用并+1</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;        </span><br><span class="line">        <span class="keyword">return</span> Math.max(maxDepth(root.left),maxDepth(root.right)) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题目来源：&lt;a href=&quot;https://leetcode.com/problems/maximum-depth-of-binary-tree/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode.com/problems/maximum-depth-of-binary-tree/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;标记难度：Easy&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 617 Merge Two Binary Trees</title>
+    <link href="http://yoursite.com/2019/02/19/leetcode-617-merge-two-binary-trees/"/>
+    <id>http://yoursite.com/2019/02/19/leetcode-617-merge-two-binary-trees/</id>
+    <published>2019-02-19T13:44:24.000Z</published>
+    <updated>2019-03-26T14:00:12.925Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目来源：<a href="https://leetcode.com/problems/merge-two-binary-trees/" target="_blank" rel="noopener">https://leetcode.com/problems/merge-two-binary-trees/</a><br><a id="more"></a><br>标记难度：Easy</p><p>提交次数：1/1</p><p>代码效率：98.24%</p><p>耗时：25分钟</p><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>合并两个给定的子二叉树，新的二叉树每个节点是两个二叉树对应节点的和，如果某一个二叉树的节点不存在，则取另外一个二叉树对应节点的值作为新的二叉树对应节点的值。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Input: </span><br><span class="line">Tree 1                     Tree 2                  </span><br><span class="line">          1                         2                             </span><br><span class="line">         / \                       / \                            </span><br><span class="line">        3   2                     1   3                        </span><br><span class="line">       /                           \   \                      </span><br><span class="line">      5                             4   7                  </span><br><span class="line">Output: </span><br><span class="line">Merged tree:</span><br><span class="line">     3</span><br><span class="line">    / \</span><br><span class="line">   4   5</span><br><span class="line">  / \   \ </span><br><span class="line"> 5   4   7</span><br></pre></td></tr></table></figure><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>主要考察对递归算法的理解。</p><ul><li>首先考虑边界，如果两个子二叉树都为空，则新的二叉树必定为空</li><li>考虑其中一个子二叉树为空，则新的二叉树直接等于另外一个子二叉树</li><li>如果两个子二叉树都不为空，新二叉树节点值为两个子二叉树对应节点的值的和，同时对两个子二叉树的左右子树进行递归调用，仔细想想就明白了</li></ul><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">mergeTrees</span><span class="params">(TreeNode t1, TreeNode t2)</span> </span>&#123;</span><br><span class="line">        TreeNode ret;</span><br><span class="line">        <span class="keyword">if</span>(t1 == <span class="keyword">null</span> &amp;&amp; t2 == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(t1 != <span class="keyword">null</span> &amp;&amp; t2 == <span class="keyword">null</span>)&#123;</span><br><span class="line">            ret = t1;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(t1 == <span class="keyword">null</span> &amp;&amp; t2 != <span class="keyword">null</span>)&#123;</span><br><span class="line">            ret = t2;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            ret = <span class="keyword">new</span> TreeNode(t1.val + t2.val);</span><br><span class="line">            ret.left = mergeTrees(t1.left,t2.left);</span><br><span class="line">            ret.right = mergeTrees(t1.right,t2.right);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当然别人思路的总是最好的 o(╥﹏╥)o</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">mergeTrees</span><span class="params">(TreeNode t1, TreeNode t2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (t1 == <span class="keyword">null</span>) <span class="keyword">return</span> t2;</span><br><span class="line">    <span class="keyword">if</span> (t2 == <span class="keyword">null</span>) <span class="keyword">return</span> t1;</span><br><span class="line">    TreeNode result = <span class="keyword">new</span> TreeNode(t1.val + t2.val);</span><br><span class="line">    result.left = mergeTrees(t1.left, t2.left);</span><br><span class="line">    result.right = mergeTrees(t1.right, t2.right);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="一些废话"><a href="#一些废话" class="headerlink" title="一些废话"></a>一些废话</h3><p>学习数据结构的时候，总感觉递归对自己来说是弱项，智商不够用。今天居然一次性直接做出来了。学习数据结构和算法真的能培养思维逻辑和解决问题的能力。fighting !!!</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题目来源：&lt;a href=&quot;https://leetcode.com/problems/merge-two-binary-trees/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode.com/problems/merge-two-binary-trees/&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 461 Hamming Distance</title>
+    <link href="http://yoursite.com/2019/02/18/leetcode-461-hamming-distance/"/>
+    <id>http://yoursite.com/2019/02/18/leetcode-461-hamming-distance/</id>
+    <published>2019-02-18T13:44:24.000Z</published>
+    <updated>2019-03-26T14:00:44.816Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目来源：<a href="https://leetcode.com/problems/hamming-distance/" target="_blank" rel="noopener">https://leetcode.com/problems/hamming-distance/</a><br><a id="more"></a><br>标记难度：Easy</p><p>提交次数：1/2 (少写了 return 语句。。)</p><p>代码效率：91.77%</p><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>统计两个整数转换成二进制位时位数不同的个数。</p><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>二进制的每一位的值不是 0 就是 1，就是整数除以 2 取余的结果，判断是否相等。然后再取模（相当于向左移动一位），再取余作比较。</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingDistance</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(x != <span class="number">0</span> || y != <span class="number">0</span>)&#123;</span><br><span class="line">            i = x % <span class="number">2</span>;</span><br><span class="line">            j = y % <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(i != j)&#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">            x = x / <span class="number">2</span>;</span><br><span class="line">            y = y / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>别人的一行代码实现Orz：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingDistance</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Integer.bitCount(x ^ y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题目来源：&lt;a href=&quot;https://leetcode.com/problems/hamming-distance/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode.com/problems/hamming-distance/&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 771 Jewels And Stones</title>
+    <link href="http://yoursite.com/2019/02/17/leetcode-771-jewels-and-stones/"/>
+    <id>http://yoursite.com/2019/02/17/leetcode-771-jewels-and-stones/</id>
+    <published>2019-02-17T13:44:24.000Z</published>
+    <updated>2019-03-26T14:00:27.222Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目来源： <a href="https://leetcode.com/problems/jewels-and-stones/" target="_blank" rel="noopener">https://leetcode.com/problems/jewels-and-stones/</a><br><a id="more"></a><br>标记难度：Easy</p><p>提交次数：1/4</p><p>代码效率：93.10%</p><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>给定两个字符串 J 和 S，找出 J 中的字母出现在 S 中的次数。</p><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>把 J 和S 转换成字符数组，遍历 J 数组中的字符是否等于 S 中的 字符。</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numJewelsInStones</span><span class="params">(String J, String S)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span>[] charJ = J.toCharArray();</span><br><span class="line">        <span class="keyword">char</span>[] charS = S.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> <span class="keyword">var</span> : charJ)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;charS.length;i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">var</span> == charS[i])&#123;</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>别人还有更好的做法：</p><ul><li>遍历 J 把字符放入 set 集合</li><li>遍历 S 字符是否出现在 set 中</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numJewelsInStones</span><span class="params">(String J, String S)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        Set setJ = <span class="keyword">new</span> HashSet();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> j: J.toCharArray()) setJ.add(j);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> s: S.toCharArray()) <span class="keyword">if</span> (setJ.contains(s)) res++;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><h3 id="一些废话"><a href="#一些废话" class="headerlink" title="一些废话"></a>一些废话</h3><p>第一次开始刷 Leetcode ,虽然做的是 easy 的题目，但还是没有参考其他人的答案自己完成了。开始有一点新鲜感和成就感了，希望可以坚持下去。</p><p>刚开始刷题使用的是 VS CODE 码代码，在网上看了一些网友的建议，为了应对后续面试可能要求手写编程的情况，所以现在是先用 IDE 把代码写出来，再手写输入 Leetcode 提交答案。</p><p>加油！</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题目来源： &lt;a href=&quot;https://leetcode.com/problems/jewels-and-stones/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode.com/problems/jewels-and-stones/&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode Tips</title>
+    <link href="http://yoursite.com/2019/02/15/Leetcode-tips/"/>
+    <id>http://yoursite.com/2019/02/15/Leetcode-tips/</id>
+    <published>2019-02-15T13:44:24.000Z</published>
+    <updated>2019-03-26T14:00:54.730Z</updated>
+    
+    <content type="html"><![CDATA[<p>数据结构和算法是编程中很重要的一部分，学习了这些知识之后，对解题思路有很大的帮助。</p><p>数据结构和算法也是其他技术的实现基础，要理解这些技术的实现原理就必须学习数据结构和算法。推荐学习书籍：<br><a id="more"></a></p><ul><li><p>数据结构与算法之美</p><p>极客时间的一个专栏，内容通俗易懂，适合入门</p></li><li><p>数据结构与算法分析：Java语言描述</p><p>下一步打算看的书籍</p></li><li><p>经典大作：算法，算法导论</p></li></ul><p>附数据结构与算法之美推荐书单：<br><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1550407333793.png" alt></p><h3 id="Leetcode-刷题方法"><a href="#Leetcode-刷题方法" class="headerlink" title="Leetcode 刷题方法"></a>Leetcode 刷题方法</h3><p>在刚开始刷 Leetcode 时，很多人只有在看完答案才知道要怎么做，如果不看答案的话完全没有思路。这是非常正常的现象，并不表示你的思维能力比别人差。人类最擅长的学习方式是模仿，刚开始刷题的时候不会做看看别人怎么做是很正确的做法，模仿多了自然就会做了。</p><p>刷 Leetcode 也有两种流派：龟派和兔派。龟派每道题都要想很久，而且尽可能想出多种解法。兔派是想一会儿就看答案，这样就可以很快地刷题。龟派比较适合思维锻炼，而兔派比较适合短期内快速提高并记忆。如果是为了应对校招的话，比较推荐兔派这种刷题方法，因为校招确实很依赖于短期记忆。选择兔派这种方式的话，就需要反复地进行复习，从而保持记忆并增加理解。但是也不能完全采用兔派这种方法，因为如果习惯于不去思考怎么做的话，会养成惰性的思维方式。</p><p>当你刷题到一定程度的时候，最好每天再刷一两题保持题感。可以选你之前做过的题目，因为你再做一遍的话可以很快做出来，这样子就可以让你对刷题这件事保持积极的一种心态。</p><p>刷 Leetcode 的收益如下图所示，可以看到刷的越多收益增长的越小。刷 200 题就足够应对大多数互联网公司的校招，但是如果时间不够的话刷 100 题也是有很大的收益，可以刷一下 <a href="https://leetcode.com/problemset/top-100-liked-questions/" target="_blank" rel="noopener">Top 100 Liked Questions</a>。</p><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1550407398105.png" alt></p><ul><li>排序：大部分要求能手写，并分析时间空间复杂度，以及稳定性</li><li>树：红黑树的原理以及在 JDK 的使用；B+ 树以及在数据库索引中的使用</li><li>图：拓扑排序；并查集；最短路径；最小生成树</li><li>散列表：实现原理，以及在 JDK 中的使用</li><li>字符串：KMP；AC 自动机；Trie 树</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;数据结构和算法是编程中很重要的一部分，学习了这些知识之后，对解题思路有很大的帮助。&lt;/p&gt;
+&lt;p&gt;数据结构和算法也是其他技术的实现基础，要理解这些技术的实现原理就必须学习数据结构和算法。推荐学习书籍：&lt;br&gt;
+    
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/categories/algorithms/"/>
+    
+    
+      <category term="algorithms,Leetcode" scheme="http://yoursite.com/tags/algorithms-Leetcode/"/>
+    
+  </entry>
   
   <entry>
     <title>OS Summary 8 - 页面置换算法</title>
