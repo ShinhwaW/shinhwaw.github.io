@@ -1,0 +1,86 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> OS Summary - 操作系统实验环境 · Shinhwa's Site</title><meta name="description" content="OS Summary - 操作系统实验环境 - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">OS Summary - 操作系统实验环境</h1><div class="post-info">Nov 27, 2018<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/OS/" class="post-category">#OS</a></div><div class="post-content"><h3 id="课程内容概述"><a href="#课程内容概述" class="headerlink" title="课程内容概述"></a>课程内容概述</h3><ul>
+<li>实验内容的详细介绍</li>
+<li>X86-32硬件的介绍</li>
+<li>uCore 的部分编程技巧和数据结构</li>
+<li>如何使用工具编写和调试实验</li>
+</ul>
+<p>实验主要是使用 C 语言实现的，目前还没有认真动手操作，只是大概了解一下思路。</p>
+<h3 id="实验具体内容"><a href="#实验具体内容" class="headerlink" title="实验具体内容"></a>实验具体内容</h3><p>略。。。</p>
+<h3 id="X86-32硬件简单介绍"><a href="#X86-32硬件简单介绍" class="headerlink" title="X86-32硬件简单介绍"></a>X86-32硬件简单介绍</h3><ul>
+<li>运行模式<ul>
+<li>80386 共有四中运行模式，我们只用到了其中两种</li>
+<li>实模式：加电后的默认模式，在BootLoader中就会切换为保护模式</li>
+<li>保护模式：一般的模式</li>
+</ul>
+</li>
+<li>寻址方法<ul>
+<li>逻辑地址：由16位的段选择子和32位的偏移量组成，是应用程序直接使用的地址空间（大概就是程序运行时访问的地址）</li>
+<li>线性地址：由逻辑地址的偏移量 + 段基址得到，是虚存管理下每个运行的应用程序能访问的地址空间</li>
+<li>物理地址：处理器提交到总线上用于访问计算机系统中内存和外设的最终地址。如果未开启页机制，则物理地址 = 线性地址；否则通过页表和线性地址可得到物理地址</li>
+</ul>
+</li>
+<li>寄存器<ul>
+<li>通用寄存器<ul>
+<li>EAX : 累加器</li>
+<li>EBX : 基址寄存器</li>
+<li>ECX : 计数器</li>
+<li>EDX : 数据寄存器</li>
+<li>ESI : 原地址指针寄存器</li>
+<li>EDI : 目的地址指针寄存器</li>
+<li>EBP : 基址指针寄存器</li>
+<li>ESP : 堆栈指针寄存器</li>
+</ul>
+</li>
+<li>段寄存器<ul>
+<li>CS : 代码段 ( Code Segment)</li>
+<li>DS : 数据段（Data Segment）</li>
+<li>ES : 附加数据段（Extra Segment）</li>
+<li>SS : 堆栈段（Stack Segment</li>
+<li>FS : 附加段</li>
+<li>GS : 附加段</li>
+</ul>
+</li>
+<li>指令寄存器 EIP : 指令的段内偏移地址</li>
+<li>标志寄存器 EFLAGS : <ul>
+<li>TF : 开启单步调试</li>
+<li>IF : 开启硬件中断</li>
+<li>IOPL : I/O特权级，CPL &lt;= IOPL 时才能进行 I/O 操作 </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="选择题"><a href="#选择题" class="headerlink" title="选择题"></a>选择题</h3><p>略。。。</p>
+<h3 id="简答题"><a href="#简答题" class="headerlink" title="简答题"></a>简答题</h3><p><strong>你理解的对于类似ucore这样需要进程/虚存/文件系统的操作系统，在硬件设计上至少需要有哪些直接的支持？至少应该提供哪些功能的特权指令？</strong></p>
+<p>进程的切换需要硬件支持时钟中断；虚存管理需要地址映射机制，从而需要MMU等硬件；对于文件系统，需要硬件有稳定的存储介质来保证操作系统的持久性。对应的，应当提供中断使能，触发软中断等中断相关的，设置内存寻址模式，设置页表等内存管理相关的，执行 I/O 操作等文件系统相关的特权指令。</p>
+<p>对于现代操作系统（每个进程占一个时间片）时钟中断是非常重要的。存储介质当然也是非常重要的。当然，事实上，MMU 没有也行，可以用用户态函数库来实现地址转换，但这样可能就保证不了安全性了。</p>
+<p>Intel 手册第 3 卷 2.8 j节 “System Instruction Summary” 中给出了一个系统指令列表。 “系统指令完成的是系统级的功能，包括加载系统寄存器、管理 Cache、管理终端和设置调试寄存器。其中的大部分指令都必须由操作系统或特权级为 0 的进程执行；另一部分可以由任何特权级的进程执行。”</p>
+<p><strong>你理解的x86的实模式和保护模式有什么区别？物理地址、线性地址、逻辑地址的含义分别是什么？</strong></p>
+<p>保护模式和实模式的根本区别是进程内存是否受保护。（作者的意见是，实模式既是一个历史包袱，又有一定的实际用途。在实模式下，BIOS 自检和加载 BootLoader 的程序可以尽可能简单，因为不需要建立复杂的段映射。但是段机制必须开启这一点也是历史包袱。总之，BootLoader 一开始就开了 A20 ，设置了GDT然后长跳转切换到保护模式了。）实模式将整个内存看成分段的区域，程序代码和数据位于不同的区域，系统程序和用户程序没有区别对待，而且没一个指针都是指向“实在”的物理地址。这样一来，用户程序的一个指针如果指向了系统程序区域或其他用户程序区域，并改变了值，那么对于这个别修改的系统程序或用户程序，其后果可能是灾难性的。为了克服这种低劣的内存管理模式，处理器厂商开发出保护模式。这样，物理内存不能直接被程序访问，程序内部的地址（虚拟地址）要由操作系统转化为物理地址去访问，程序对此一无所知。</p>
+<ul>
+<li>物理地址：是处理器提交到总线上用于访问计算机系统中的内存和外设的最终地址。</li>
+<li>逻辑地址：在有地址变换功能的计算机中，访问指令给出的地址叫逻辑地址。（一般的定义是段选择子+段内偏移量是逻辑地址。大概）</li>
+<li>线性地址：线性地址是逻辑地址和物理地址变换之间的中间层，是处理器通过段（Segment）机制控制下形成的地址空间</li>
+<li>虚拟地址：对这个名称的定义总是模糊不清。在这门课中，似乎虚拟地址就是程序内存的地址。</li>
+</ul>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/OS/">#OS</a></p></article></div><footer><div class="paginator"><a href="/2018/12/02/os-lecture-3-summary/" class="prev">上一篇</a><a href="/2018/11/21/os-lecture-1-summary/" class="next">下一篇</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Tue Nov 27 2018 00:03:51 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>

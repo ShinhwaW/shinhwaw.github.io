@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2019/03/26/os-lecture-1-summary/</loc>
+    <loc>http://yoursite.com/about/index.html</loc>
     
-    <lastmod>2019-03-26T08:05:15.843Z</lastmod>
+    <lastmod>2019-03-26T09:29:18.177Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/12/02/os-lecture-3-summary/</loc>
+    
+    <lastmod>2019-03-26T09:27:46.127Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/11/21/os-lecture-1-summary/</loc>
+    
+    <lastmod>2019-03-26T09:23:59.747Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/11/27/os-lecture-2-summary/</loc>
+    
+    <lastmod>2019-03-26T09:23:51.295Z</lastmod>
     
   </url>
   
@@ -12,13 +33,6 @@
     <loc>http://yoursite.com/2019/03/24/hello-world/</loc>
     
     <lastmod>2019-03-25T16:26:42.363Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2019-03-25T15:48:58.953Z</lastmod>
     
   </url>
   
