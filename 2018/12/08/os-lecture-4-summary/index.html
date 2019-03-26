@@ -1,0 +1,95 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> OS Summary 4 - 实验:系统软件启动过程 · Shinhwa's Site</title><meta name="description" content="OS Summary 4 - 实验:系统软件启动过程 - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">OS Summary 4 - 实验:系统软件启动过程</h1><div class="post-info">Dec 8, 2018<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/OS/" class="post-category">#OS</a></div><div class="post-content"><h3 id="课程内容概述"><a href="#课程内容概述" class="headerlink" title="课程内容概述"></a>课程内容概述</h3><p>主要介绍了一些和 Lab1 相关的内容。（对 C++ 一窍不通。。羞耻，只是大致了解一下，有时间和精力要对照试验内容认真补一下。。。</p>
+<ul>
+<li>系统启动过程<ul>
+<li>BIOS</li>
+<li>BootLoader<ul>
+<li>段机制</li>
+<li>操作系统的加载</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>C 语言的一些相关的只是<ul>
+<li>函数调用过得实现（略）</li>
+<li>GCC 内联汇编（略）</li>
+</ul>
+</li>
+<li>x86 架构下的中断处理过程<a id="more"></a>
+<h4 id="系统启动过程"><a href="#系统启动过程" class="headerlink" title="系统启动过程"></a>系统启动过程</h4></li>
+</ul>
+<p><strong>BIOS</strong></p>
+<p>BIOS 的工作过程已经在第三讲中详细说过了，在此不再重复。唯一值得注意的是，虽然实模式下的寻址方式是 Base (16 位寄存器 CS)*16+Offset (16位寄存器IP) = 线性地址( 20 位)，但这并不是段机制。</p>
+<p><strong>bootloader</strong></p>
+<p>BIOS 将控制权转交给bootloader。它的工作内容主要包括：</p>
+<ul>
+<li>使能保护模式 ( protection mode ) 和段机制 (segment level protection)，切换回 32 位 4G 的寻址空间，对段机制进行初始化</li>
+<li>从硬盘上读取 ELF 格式的 ucore kernel (位于 MBR 后面的扇区) 并放到内存中固定的位置。</li>
+<li>跳转到 ucore OS 的入口点 (entry point)，将控制权转交给 ucore OS</li>
+</ul>
+<p><strong>使能保护模式</strong></p>
+<p>将系统寄存器 CR0 的第 0 个 bit 置为 1，说明进入保护模式。当然，在此之前要开 A20，并准备好 GDT 表，将基址加载到 GDT 基址寄存器中。</p>
+<p><strong>段机制</strong></p>
+<p>保护模式下必须开启段机制。</p>
+<p>总的来说，段机制其实是一种映射关系。一个段指向的是线性地址空间中一段连续的内存，有基址和 limit 。短与段之间是可以重叠的。</p>
+<p>设置段机制的方法是，建立一个数组来存储段描述符表，称为全局描述符表 GDT (也称为段表，在 ucore 中是由 bootloader 建立的，因为开启保护模式之前就需要设置好 GDT )，其中包括描述符表的位置、大小等信息。这样 CPU 就可以找到段表了 (用 GDTR 寄存器保存表信息)。除了设置 GDT 之外，还要为 CS、DS 等段寄存器设置好对应的 index，使他们能够指向全局描述符表 GDT 对应的项，这可以在切换到保护模式之后进行。</p>
+<p>硬件提供了一些段寄存器。这些段寄存器指向段描述符，比较重要的几个段寄存器包括：</p>
+<ul>
+<li>CS : 代码段寄存器</li>
+<li>DS : 数据段寄存器</li>
+<li>SS : 堆栈段寄存器</li>
+</ul>
+<p>段寄存器的结构是这样的：</p>
+<ul>
+<li>高 13 位：GDT index</li>
+<li>1 位：TI，一般设置为0，因为没有用到 LDT (本地描述符表)</li>
+<li>2位：RP，表明段优先级，有 4 个特权级，一般应用程序放在 3 , 操作系统放在 0</li>
+</ul>
+<p>每个段寄存器指向一个 GDT 或者 LDT 中的段描述符。段描述符描述了一个段的起始地址和它的大小。(一个段描述符的大小是 8 字节，具体内容比较复杂。。。忽略)</p>
+<p>uCore 中采用过的应该是 Intel 手册中提到的扁平保护模型。</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1548928847605.png" alt></p>
+<p>在设置完所需的表和寄存器之后，段机制就可以完成从逻辑地址到线性地址（在页机制没有开启的时候，线性地址 = 物理地址）的翻译了。</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1548928968301.png" alt></p>
+<ul>
+<li>通过逻辑地址中的段选择子查找段描述符表项</li>
+<li>从表项中读出段基址和段的大小</li>
+<li>检查逻辑地址中的 offset 是否合法</li>
+<li>安全性检查</li>
+<li>段基址 (Base Address) + 段内偏移量 (offset) = 线性地址 (linear address)</li>
+</ul>
+<h4 id="代码实现过程"><a href="#代码实现过程" class="headerlink" title="代码实现过程"></a>代码实现过程</h4><p>（略。。。）</p>
+<h4 id="x86-架构下的中断处理过程"><a href="#x86-架构下的中断处理过程" class="headerlink" title="x86 架构下的中断处理过程"></a>x86 架构下的中断处理过程</h4><p>此处的 “中断” 包括两类：</p>
+<ul>
+<li>中断 (Interrupts)<ul>
+<li>外部中断 (External (hardware generated) interrupts)：串口、硬盘、网卡、时钟</li>
+<li>软件产生的中断 (Software generated interrupts)：INT n指令，通常用于系统调用</li>
+</ul>
+</li>
+<li>异常 (Exceptions)<ul>
+<li>程序错误</li>
+<li>软件产生的异常 (Software generated excetpion)：INTO, INT 3 和 BOUND</li>
+<li>机器检查出的异常</li>
+</ul>
+</li>
+</ul>
+<h4 id="通过中断号确定中断服务例程-ISR"><a href="#通过中断号确定中断服务例程-ISR" class="headerlink" title="通过中断号确定中断服务例程 ( ISR )"></a>通过中断号确定中断服务例程 ( ISR )</h4><p>（略。。。）</p>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/OS/">#OS</a></p></article></div><footer><div class="paginator"><a href="/2018/12/13/os-lecture-5-summary/" class="prev">PREV</a><a href="/2018/12/02/os-lecture-3-summary/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Sat Dec 08 2018 00:03:51 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>

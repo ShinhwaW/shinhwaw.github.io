@@ -1,0 +1,361 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> OS Summary 5 - 物理内存管理:连续内存分配 · Shinhwa's Site</title><meta name="description" content="OS Summary 5 - 物理内存管理:连续内存分配 - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">OS Summary 5 - 物理内存管理:连续内存分配</h1><div class="post-info">Dec 13, 2018<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/OS/" class="post-category">#OS</a></div><div class="post-content"><h3 id="课程内容概述"><a href="#课程内容概述" class="headerlink" title="课程内容概述"></a>课程内容概述</h3><ul>
+<li>计算机体系结构和内存层次</li>
+<li>地址空间和地址生成</li>
+<li>连续内存分配<ul>
+<li>三种不同的分类策略</li>
+<li>碎片整理</li>
+<li>伙伴系统</li>
+</ul>
+</li>
+<li>uCore 中的连续内存管理实现框架<a id="more"></a>
+<h4 id="计算机体系结构和内存层次"><a href="#计算机体系结构和内存层次" class="headerlink" title="计算机体系结构和内存层次"></a>计算机体系结构和内存层次</h4></li>
+</ul>
+<p>计算机体系结构由 CPU、内存、I/O 设备、总线组成。</p>
+<p>CPU 中包括：</p>
+<ul>
+<li>ALU、控制逻辑</li>
+<li>寄存器</li>
+<li>高速缓存：加快读写速度</li>
+<li>存储管理单元 (MMU)</li>
+</ul>
+<p>内存的特点：</p>
+<ul>
+<li>最小访问单位是字节 (8 bit )</li>
+<li>一次可以读 / 写 4 字节 (32 位)，有地址对其问题</li>
+</ul>
+<p>内存可以分为如下层次：</p>
+<ul>
+<li>CPU 中：<ul>
+<li>L1 缓存</li>
+<li>L2 缓存</li>
+<li>这些缓存都是由硬件 (MMU) 来控制的，软件看不到</li>
+</ul>
+</li>
+<li>高速缓存未命中：( 这之下由操作系统软件来控制)<ul>
+<li>内存</li>
+</ul>
+</li>
+<li>缺页</li>
+<li>外存 ( 虚拟内存 )</li>
+</ul>
+<h4 id="操作系统的内存管理"><a href="#操作系统的内存管理" class="headerlink" title="操作系统的内存管理"></a>操作系统的内存管理</h4><p>OS 内存管理的特点：</p>
+<ul>
+<li>每个字节有自己的物理地址</li>
+<li>分为内存和外存</li>
+<li>每个进程有自己用的内存片，它们自己的地址之间是可以重叠的</li>
+<li>MMU：将逻辑 ( 虚拟 ) 地址空间转换为物理地址空间</li>
+</ul>
+<p>OS 内存管理的目标：</p>
+<ul>
+<li>抽象：逻辑地址空间</li>
+<li>保护：独立地址空间</li>
+<li>共享：访问相同内存</li>
+<li>虚拟化：更大的地址空间</li>
+</ul>
+<p>操作系统采用的内存管理方式：</p>
+<ul>
+<li>重定位 (relocation)：段地址 + 偏移</li>
+<li>分段 (segmentation)：程序的逻辑结构不需要连成一片，而是分成代码、数据、堆栈 3 块，每一块的空间就减少了；但每段的内容是连续的</li>
+<li>分页 (paging)：把内存分成最基本的单位</li>
+<li>虚拟存储 (virtual memory)：目前多数系统 ( 如 Linux ) 采用的是按需页式虚拟存储</li>
+</ul>
+<p>内存管理方式的实现是高度依赖硬件的：</p>
+<ul>
+<li>与计算机存储架构紧密耦合</li>
+<li>MMU (内存管理单元)：处理 CPU 存储访问请求的硬件</li>
+</ul>
+<blockquote>
+<p>静态地址重定位：即在程序装入内存的过程中完成，是指在程序开始运行前，程序中的各个地址有关的项均已完成重定位，地址变换通常是在装入时一次完成的，以后不再改变，故成为静态重定位。<br>优点：无需硬件支持<br>缺点：1）程序重定位之后就不能在内存中搬动了；2）要求程序的存储空间是连续的，不能把程序放在若干个不连续的区域中。<br>动态地址重定位：不是在程序执行之前而是在程序执行过程中进行地址重定位。更确切的说，是在每次访问内存单元前才进行地址变换。动态重定位可使装配模块不加任何修改而装入内存，但是它需要硬件一定位寄存器的支持。<br>优点：1）目标模块装入内存时无需任何修改，因而装入之后再搬迁也不会影响其正确执行，这对于存储器紧缩、解决碎片问题是极其有利的；2）一个程序由若干个相对独立的目标模块组成时，每个目标模块各装入一个存储区域，这些存储区域可以不是顺序相邻的，只要各个模块有自己对应的定位寄存器就行。<br>缺点：需要硬件支持。</p>
+</blockquote>
+<h4 id="地址空间和地址生成"><a href="#地址空间和地址生成" class="headerlink" title="地址空间和地址生成"></a>地址空间和地址生成</h4><p>一般来说，地址空间至少有 3 种：</p>
+<ul>
+<li>物理地址空间：硬件支持的地址空间<ul>
+<li>起始地址 0 </li>
+<li>到 MAXsys </li>
+</ul>
+</li>
+<li>线性地址空间：CPU 看到的地址<ul>
+<li>起始地址 0</li>
+<li>大小取决于地址线的宽度</li>
+</ul>
+</li>
+<li>逻辑地址空间：在 CPU 中运行的进程看到的地址<ul>
+<li>起始地址 0 </li>
+<li>到 MAXprog</li>
+<li>也就是用户程序可见的地址</li>
+</ul>
+</li>
+</ul>
+<p>逻辑地址的生成需要经过如下几个过程：</p>
+<ul>
+<li>高级语言程序：写出函数</li>
+<li>编译：对源代码进行编译，称为汇编源代码，此时仍然用符号来指代函数</li>
+<li>汇编：汇编成二进制代码，用具体地址来替代符号了，但是有一些函数还没有找到</li>
+<li>链接：加入函数库，找到库函数的地址</li>
+<li>重定位：程序加载时进行，视程序实际位置改变符号地址</li>
+</ul>
+<p>一般来说，生成地址有几个时机：</p>
+<ul>
+<li>编译时（优点：简单）<ul>
+<li>假设起始地址已知</li>
+<li>但如果起始地址改变，就必须重新编译</li>
+<li>功能手机一般会有这种情况</li>
+</ul>
+</li>
+<li>加载时<ul>
+<li>如果加载时起始位置未知，编译器需生成可重定位的代码 ( relocation code )</li>
+<li>加载时，生成绝对地址</li>
+</ul>
+</li>
+<li>执行时（优点：灵活）<ul>
+<li>执行时代码可移动</li>
+<li>需地址转换（映射）硬件支持（一般是虚拟存储）</li>
+</ul>
+</li>
+</ul>
+<h4 id="连续内存分配"><a href="#连续内存分配" class="headerlink" title="连续内存分配"></a>连续内存分配</h4><p>一般分配给一个进程的地址空间是连续的，因此需要进行有效的内存分配。需求是，给进程分配一块不小于制定大小的连续的物理内存区域。定义碎片是过小的不能被利用的空闲内存，分为 2 类：</p>
+<ul>
+<li>外部碎片：分配单元之间的未被使用内存</li>
+<li>内部碎片：分配单元内部的未被使用内存（一般是否有内碎片取决于分配单元大小是否要取整）</li>
+</ul>
+<p>我们在 uCore 中进行的是动态内存分配，需要满足如下要求：</p>
+<ul>
+<li>当程序被加载执行时，分配一个进程指定大小可变的分区（块）</li>
+<li>分区的地址是连续的</li>
+</ul>
+<p>一般来说，操作系统需要维护至少 2 个数据结构，里面存储的内容是：</p>
+<ul>
+<li>所有进程的已分配分区</li>
+<li>空闲分区 ( Empty-blocks )</li>
+</ul>
+<p>常见的几种连续内存分配策略包括：</p>
+<ul>
+<li>最先匹配 (First-fit)</li>
+<li>最佳匹配 (Best-fit)</li>
+<li>最差匹配 (worst-fit)</li>
+</ul>
+<p>总的来说，这些匹配方式各有优劣，至于到底是什么优劣，与使用场景关系很大。</p>
+<h4 id="三种不同的分类策略"><a href="#三种不同的分类策略" class="headerlink" title="三种不同的分类策略"></a>三种不同的分类策略</h4><p><strong>最先匹配 (First Fit Allocation) 策略</strong></p>
+<p>思路：需要分配 n 个字节时，使用第一个可用的空间比 n 打的空闲块</p>
+<p>原理和实现：</p>
+<ul>
+<li>空闲分区列表按地址顺序排序</li>
+<li>分配时搜索第一个合适的分区</li>
+<li>释放分区时，检查是否可与邻近的空闲分区合并</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>简单</li>
+<li>在搞地质空间有大块的空闲分区</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>容易产生外部碎片</li>
+<li>分配大块时较慢</li>
+</ul>
+<p><strong>最佳匹配 (Best Fit Allocation) 策略</strong></p>
+<p>思路：分配 n 字节内存时，查找并使用不小于 n 的最小空闲分区</p>
+<p>原理和实现：</p>
+<ul>
+<li>空闲分区列表按照大小排序</li>
+<li>分配时，查找一个合适的分区</li>
+<li>释放时，查找并合并邻近的空闲分区（如果找到）</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>大部分分配的尺寸较小时，效果很好<ul>
+<li>可避免大的空闲分区被拆分</li>
+<li>可减少外部碎片的大小</li>
+<li>相对简单</li>
+</ul>
+</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>外部碎片较多</li>
+<li>释放分区较慢</li>
+<li>容易产生很多无用的小碎片</li>
+</ul>
+<p><strong>最差匹配 (Worst Fit Allocation) 策略</strong></p>
+<p>思路：分配 n 字节时，使用尺寸不小于 n 的最大空闲分区</p>
+<p>原理和实现：</p>
+<ul>
+<li>空闲分区列表由大到小排序</li>
+<li>分配时，选最大的分区</li>
+<li>释放时检查是否可与邻近的空闲分区合并，进行可能的合并，并调整空闲分区列表顺序</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>中等大小的分配较多时，效果最好</li>
+<li>避免出现太多的小碎片</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>释放分区较慢</li>
+<li>外部碎片较多</li>
+<li>容易破坏打的空闲分区，因此难以分配大的分区</li>
+</ul>
+<h4 id="碎片整理"><a href="#碎片整理" class="headerlink" title="碎片整理"></a>碎片整理</h4><p>上述方法都会产生外碎片。（但是不会产生内碎片，因为是按需分配的）如果碎片太多，就有可能出现，即使空余内存总数足够大，也无法分配出一块连续内存的情况。为此就需要进行碎片整理。碎片整理的定义是通过调整进程占用的分区位置来减少或避免分区碎片。一般有两种碎片整理的方法</p>
+<ul>
+<li>紧凑（compaction）通过移动分配给进程的内存分区，以合并外部碎片<ul>
+<li>进行碎片紧凑的条件：所有的应用程序可动态重定位</li>
+<li>需要在应用程序等待时进行移动</li>
+<li>需要考虑开销</li>
+</ul>
+</li>
+<li>分区对换（Swapping in/out）：通过抢占并回收处于等待状态进程的分区，以增大可用内存空间<ul>
+<li>这就让更多进程能够在内存里交替运行</li>
+<li>需要解决的问题：交换哪个（些）进程？</li>
+<li>swap分区在linux中是耳熟能详的，在早期很有用，但代价很大，因为外存的速度远远慢于内存</li>
+<li>有了虚拟页式存储之后，纯粹的分区对换的意义就不大了</li>
+</ul>
+</li>
+</ul>
+<h4 id="伙伴系统"><a href="#伙伴系统" class="headerlink" title="伙伴系统"></a>伙伴系统</h4><p>伙伴系统（Buddy System）是一种连续存储分配的办法，它解决了分配位置和碎片的问题。</p>
+<p>假定整个可分配的分区大小为2u，伙伴系统的分配和释放过程如下：</p>
+<ul>
+<li>分配过程：<ul>
+<li>需要的分区大小为2u−1&lt;s≤2u时，把整个块分配给该进程</li>
+<li>若s≤2i−1−1，则将大小为2i的当前空闲分区划分成两个大小为2i−1−1的空闲分区</li>
+<li>重复划分过程，直到2i−1&lt;s≤2i，并把一个空闲分区分配给该进程</li>
+</ul>
+</li>
+<li>释放过程：<ul>
+<li>将进程占用的块释放</li>
+<li>查看它能否与相邻的空闲块合并（注意边界条件）</li>
+<li>如果能合并，则不断合并到不能再合并为止</li>
+</ul>
+</li>
+</ul>
+<p>由分析可知，内碎片的大小最多是2i−1−1，没有外碎片。</p>
+<h5 id="伙伴系统的具体实现"><a href="#伙伴系统的具体实现" class="headerlink" title="伙伴系统的具体实现"></a>伙伴系统的具体实现</h5><p>数据结构：</p>
+<ul>
+<li>空闲块按大小和起始地址组织成二维数组（或者说一维数组+一维链表）</li>
+<li>第一维：大小；第二维：地址</li>
+<li>初始状态：只有一个大小为2u的空闲块</li>
+</ul>
+<p>分配过程：</p>
+<ul>
+<li><strong>由小到大</strong> 在空闲块数组中找最小的可用空闲块（只要有合适的空闲块，就不切分大块，这是隐含的一个原则吧）</li>
+<li>如果块太大，则对可用空闲块进行二等分，直到得到合适大小的块</li>
+</ul>
+<p>释放过程：</p>
+<ul>
+<li>把释放的块放入空闲块数组</li>
+<li>合并满足合并条件的空闲块，合并条件是：<ul>
+<li>大小相同，均为2i</li>
+<li>地址相邻</li>
+<li>相邻两块的低地址必须是2^(i+1)的倍数</li>
+</ul>
+</li>
+</ul>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><h4 id="选择填空题"><a href="#选择填空题" class="headerlink" title="选择填空题"></a>选择填空题</h4><p><strong>操作系统中可采用的内存管理方式包括()</strong></p>
+<ul>
+<li><strong>重定位(relocation)</strong></li>
+<li><strong>分段(segmentation</strong></li>
+<li><strong>分页(paging)</strong></li>
+<li><strong>段页式（segmentation+paging）</strong></li>
+</ul>
+<p>都有。虽然我还是很难想象重定位是内存管理方式，这难道不是进程的管理方式么，虽然能够把进程在内存中搬移大概是上述几种分配策略的前提……</p>
+<hr>
+<p><strong>在启动页机制的情况下，在CPU运行的用户进程访问的地址空间是()</strong></p>
+<ul>
+<li>物理地址空间</li>
+<li><strong>逻辑地址空间</strong></li>
+<li>外设地址空间</li>
+<li>都不是</li>
+</ul>
+<p>用户进程访问的内存地址是虚拟地址。虚拟地址加上对应的段选择子构成逻辑地址。逻辑地址经过分段翻译成线性地址。线性地址经过分页翻译成物理地址。（但是，即使没有启动页机制，用户进程访问的地址空间也应该是逻辑地址空间吧）</p>
+<hr>
+<p><strong>连续内存分配的算法中，会产生外碎片的是()</strong></p>
+<ul>
+<li><strong>最先匹配算法</strong></li>
+<li><strong>最差匹配算法</strong></li>
+<li><strong>最佳匹配算法</strong></li>
+<li>都不会</li>
+</ul>
+<p>三种算法都会有外碎片，而没有内碎片。相比之下，分页不会有外碎片，只会有内碎片。伙伴系统是可能会产生外碎片的，当然也有内碎片。</p>
+<hr>
+<p><strong>在使能分页机制的情况下，更合适的外碎片整理方法是()</strong></p>
+<ul>
+<li>紧凑(compaction)</li>
+<li>分区对换(Swapping in/out)</li>
+<li><strong>都不是</strong></li>
+</ul>
+<p>分页方式不会有外碎片。虽然很对，但这道题完全毫无意义。</p>
+<hr>
+<p><strong>描述伙伴系统(Buddy System)特征正确的是()</strong></p>
+<ul>
+<li><strong>多个小空闲空间可合并为大的空闲空间</strong></li>
+<li><strong>会产生外碎片</strong></li>
+<li><strong>会产生内碎片</strong></li>
+<li>都不对</li>
+</ul>
+<p>小空闲空间在满足一定条件时可以合并。因为是一个不断二分的过程，所以外碎片是可能会产生的。因为是分配2的幂大小的内存，所以内碎片也是有的。</p>
+<h3 id="简答题"><a href="#简答题" class="headerlink" title="简答题"></a>简答题</h3><p><strong>操作系统中存储管理的目标是什么？</strong></p>
+<ul>
+<li>抽象</li>
+<li>保护</li>
+<li>共享</li>
+<li>虚拟化</li>
+</ul>
+<hr>
+<p><strong>描述编译、汇编、链接和加载的过程是什么？</strong></p>
+<ul>
+<li>编译：将程序源代码转换为汇编代码</li>
+<li>汇编：将汇编代码转为二进制的机器码</li>
+<li>链接：将多个二进制的机器码结合成一个可执行环境</li>
+<li>加载：将程序从外存中加载到内存中</li>
+</ul>
+<hr>
+<p><strong>什么是内碎片、外碎片？</strong></p>
+<p>内碎片是指分配给任务的内存大小比任务所要求的大小所多出来的内存。外碎片指分配给任务的内存之间无法利用的内存。当然，一块内存是否为外碎片取决于需要分配的内存的大小。</p>
+<hr>
+<p><strong>最先匹配会越用越慢吗？请说明理由（可来源于猜想或具体的实验）？</strong></p>
+<p>最先匹配总是先找低地址空间的内存，到后期低地址空间都是大量小的不连续的内存空间，每次都要扫描低地址空间后到达高地质空间才能得到可用的内存。所以大概是会越用越慢的。</p>
+<hr>
+<p><strong>最差匹配的外碎片会比最优适配算法少吗？请说明理由（可来源于猜想或具体的实验）</strong></p>
+<p>应该会的。因为每次都找到最大的内存块进行分割，因此分割剩下的内存块也很大，往往还可以再装下一个程序。</p>
+<hr>
+<p><strong>理解0:最优匹配，1:最差匹配，2:最先匹配，3:buddy systemm算法中分区释放后的合并处理过程？ (optional)</strong></p>
+<p>它们的处理方式都是查看边上是否也有空闲块，如果有，则合并空闲块，然后将空闲块管理数据插入链表中。如果能进行合并，都需要连续合并。当然，伙伴系统的合并过程需要判断是否满足条件。</p>
+<hr>
+<p><strong>对换和紧凑都是碎片整理技术，它们的主要区别是什么？为什么在早期的操作系统中采用对换技术？</strong></p>
+<p>区别是，紧凑是在内存中搬动进程占用的内存位置，以合并出大块的空闲块；对换是把内存中的进程搬到外存中，以空出更多的内存空闲块。采用对换的原因是，处理简单。不过代价也比较高，因为外存比较慢。</p>
+<hr>
+<p><strong>伙伴系统的空闲块如何组织？</strong></p>
+<p>按照内存的大小由一系列链表组织。类似于哈希表，将相同大小的内存区域首地址连接起来。（因为一般来说，内存要按首地址大小排列，链表的插入删除比较简单啊）</p>
+<hr>
+<p><strong>伙伴系统的内存分配流程？</strong></p>
+<p>当向内核请求分配(2i−1，2i]数目的页块时，按照2i大小的块来请求处理。如果对应的块链表中没有空闲页块，则在更大的页块链表中找空闲块，并将大块进行切分，直到得到满足要求的块。如果切出了多余的块，伙伴系统会将这些块插入到对应的空闲页块链表中。</p>
+<hr>
+<p><strong>伙伴系统的内存回收流程？</strong></p>
+<p>当释放多页的块时，内核首先计算出该内存块的伙伴的地址。内核将满足以下条件的三个块称为伙伴：</p>
+<ol>
+<li>两个块具有相同的大小，记作b。</li>
+<li>它们的物理地址是连续的。</li>
+<li>第一块的第一个页的物理地址是2∗(2b)的倍数。</li>
+</ol>
+<p>如果找到了该内存块的伙伴，确保该伙伴的所有页都是空闲的，以便进行合并。内存继续检查合并后页块的“伙伴”并检查是否可以合并，依次类推。</p>
+<p>（所以才叫伙伴系统，了解了）</p>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/OS/">#OS</a></p></article></div><footer><div class="paginator"><a href="/2018/12/18/os-lecture-6-summary/" class="prev">PREV</a><a href="/2018/12/08/os-lecture-4-summary/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Thu Dec 13 2018 00:03:51 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> OS Summary 8 - 页面置换算法 · Shinhwa's Site</title><meta name="description" content="OS Summary 8 - 页面置换算法 - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">OS Summary 8 - 页面置换算法</h1><div class="post-info">Dec 29, 2018<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/OS/" class="post-category">#OS</a></div><div class="post-content"><p><strong>功能</strong>：当出现缺页异常，需调入新页面而内存已满时，置换算法选择被置换的物理页面</p>
+<p><strong>目标</strong></p>
+<ul>
+<li>尽可能减少页面的调入调出次数</li>
+<li>把未来不再访问或短期内不访问的页面调出<a id="more"></a>
+</li>
+</ul>
+<h3 id="最优页面置换算法-OPT-optimal"><a href="#最优页面置换算法-OPT-optimal" class="headerlink" title="最优页面置换算法 ( OPT , optimal )"></a>最优页面置换算法 ( OPT , optimal )</h3><p>置换在未来最长时间不访问的页面，理想情况</p>
+<h3 id="先进先出算法（First-In-First-Out-FIFO）"><a href="#先进先出算法（First-In-First-Out-FIFO）" class="headerlink" title="先进先出算法（First-In First-Out, FIFO）"></a>先进先出算法（First-In First-Out, FIFO）</h3><p><strong>基本思路：</strong>选择在内存驻留时间最长的页面进行置换</p>
+<p><strong>算法实现</strong></p>
+<ul>
+<li>维护一个记录所有位于内存中的逻辑页面链表</li>
+<li>链表元素按驻留内存的时间排序，链首最长，链尾最短</li>
+<li>出现缺页时，选择链首页面进行置换，新页面加到链尾</li>
+</ul>
+<p><strong>算法特征</strong></p>
+<ul>
+<li>实现简单</li>
+<li>性能较差，调出的页面可能是经常访问的</li>
+<li>进程分配物理页面数增加时，缺页并不一定减少( Belady 现象)</li>
+<li>很少单独使用</li>
+</ul>
+<h3 id="最近最久未使用算法-Least-Recently-Used-LRU"><a href="#最近最久未使用算法-Least-Recently-Used-LRU" class="headerlink" title="最近最久未使用算法(Least Recently Used, LRU)"></a>最近最久未使用算法(Least Recently Used, LRU)</h3><p><strong>基本思路</strong></p>
+<ul>
+<li>选择最长时间没有被引用的页面进行置换</li>
+<li>如某些页面长时间未被访问，则它们在将来还可能会长时间不会访问</li>
+</ul>
+<p><strong>算法实现</strong></p>
+<ul>
+<li>缺页时，计算内存中每个逻辑页面的上一次访问时间</li>
+<li>选择上一次使用到当前时间最长的页面</li>
+</ul>
+<p><strong>算法特征</strong></p>
+<p>最优置换算法的一种近似</p>
+<p><strong>LRU算法的可能实现方法</strong></p>
+<ul>
+<li>页面链表<ul>
+<li>系统维护一个按最近一次访问时间<strong>排序</strong>的页面链表</li>
+<li>链表首节点是最近刚刚使用过的页面</li>
+<li>链表尾节点是最久未使用的页面</li>
+<li>访问内存时，找到相应页面，并把它移到链表之首</li>
+<li>缺页时，置换链表尾节点的页面</li>
+</ul>
+</li>
+<li>活动页面栈<ul>
+<li>访问页面时，将此页号压入栈顶，并栈内相同的页号抽出</li>
+<li>缺页时，置换栈底的页面</li>
+</ul>
+</li>
+</ul>
+<p><strong>特征</strong></p>
+<p>开销比较大</p>
+<h3 id="时钟置换算法（Clock）"><a href="#时钟置换算法（Clock）" class="headerlink" title="时钟置换算法（Clock）"></a><strong>时钟置换算法（Clock）</strong></h3><p><strong>基本思路</strong></p>
+<p>仅对页面的访问情况进行大致统计</p>
+<p>时钟算法是LRU和FIFO的折中</p>
+<h3 id="最不常用算法（Least-Frequently-Used-LFU）"><a href="#最不常用算法（Least-Frequently-Used-LFU）" class="headerlink" title="最不常用算法（Least Frequently Used, LFU）"></a><strong>最不常用算法（Least Frequently Used, LFU）</strong></h3><p><strong>基本思路</strong></p>
+<p>缺页时，置换访问次数最少的页面</p>
+<p><strong>算法实现</strong></p>
+<ul>
+<li>每个页面设置一个访问计数（多位计数）</li>
+<li>访问页面时，访问计数加1</li>
+<li>缺页时，置换计数最小的页面</li>
+</ul>
+<p><strong>算法特征</strong></p>
+<ul>
+<li>算法开销大</li>
+<li>开始时频繁使用，但以后不使用的页面很难置换</li>
+</ul>
+<p><strong>解决方法</strong></p>
+<p>计数定期右移、衰减</p>
+<h3 id="LRU和LFU的区别"><a href="#LRU和LFU的区别" class="headerlink" title="LRU和LFU的区别"></a><strong>LRU和LFU的区别</strong></h3><ul>
+<li>LRU关注多久未访问,时间越短越好</li>
+<li>LFU关注访问次数，次数越多越好</li>
+</ul>
+<h3 id="LRU、FIFO和Clock的比较"><a href="#LRU、FIFO和Clock的比较" class="headerlink" title="LRU、FIFO和Clock的比较"></a><strong>LRU、FIFO和Clock的比较</strong></h3><ul>
+<li><p>LRU算法和FIFO本质上都是先进先出的思路</p>
+<ul>
+<li>LRU依据页面的最近访问时间排序</li>
+<li>LRU需要动态地调整顺序</li>
+<li>FIFO依据页面进入内存的时间排序</li>
+</ul>
+</li>
+<li><p>LRU可退化成FIFO</p>
+<p>如页面进入内存后没有被访问，最近访问时间与进入内存的时间相同</p>
+</li>
+<li><p>LRU算法性能较好，但系统开销较大</p>
+</li>
+<li><p>FIFO算法系统开销较小，会发生Belady现象</p>
+</li>
+<li><p>Clock算法是它们的折衷</p>
+<ul>
+<li>页面访问时，不动态调整页面在链表中的顺序，仅做标记</li>
+<li>缺页时，再把它移动到链表末尾</li>
+</ul>
+</li>
+<li><p>对于未被访问的页面，Clock和LRU算法的表现一样好</p>
+</li>
+<li><p>对于被访问过的页面，Clock算法不能记录准确访问顺序，而LRU算法可以</p>
+</li>
+</ul>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/OS/">#OS</a></p></article></div><footer><div class="paginator"><a href="/2018/12/23/os-lecture-7-summary/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Sat Dec 29 2018 00:03:51 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>
