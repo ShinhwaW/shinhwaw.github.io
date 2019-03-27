@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Beauty Of Algorithms 10 Summary. Recursion · Shinhwa's Site</title><meta name="description" content="Beauty Of Algorithms 10 Summary. Recursion - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Beauty Of Algorithms 10 Summary. Recursion</h1><div class="post-info">Jan 31, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Alogorithms/" class="post-category">#Alogorithms</a></div><div class="post-content"><h4 id="递归的概念"><a href="#递归的概念" class="headerlink" title="递归的概念"></a>递归的概念</h4><p>递归是一种非常高效、简洁的编码技巧，一种应用非常广泛的算法。</p>
+<p>比如DFS深度优先搜索、前中后序二叉树遍历等都是使用递归。</p>
+<p>方法或函数调用自身的方式称为递归调用，调用称为递，返回称为归。</p>
+<p>基本上，所有的递归问题都可以用递推公式来表示，比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f(n) = f(n-1) + 1;</span><br><span class="line">f(n) = f(n-1) + f(n-2);</span><br><span class="line">f(n)=n*f(n-1);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="递归需要满足三个条件"><a href="#递归需要满足三个条件" class="headerlink" title="递归需要满足三个条件"></a>递归需要满足三个条件</h4><ul>
+<li>一个问题的解可以分解为几个子问题的解。</li>
+<li>问题与分解后的子问题除了数据规模不同，求解思路完全相同。</li>
+<li>存在递归终止条件。</li>
+</ul>
+<h4 id="递归的优缺点"><a href="#递归的优缺点" class="headerlink" title="递归的优缺点"></a>递归的优缺点</h4><ul>
+<li><p>优点</p>
+<p>代码的表达力很强，写起来简洁。</p>
+</li>
+<li><p>缺点</p>
+<p>空间复杂度高、有堆栈溢出风险、存在重复计算、过多的函数调用会耗时较多等问题。</p>
+</li>
+</ul>
+<h3 id="实现递归"><a href="#实现递归" class="headerlink" title="实现递归"></a>实现递归</h3><h4 id="递归代码的编写"><a href="#递归代码的编写" class="headerlink" title="递归代码的编写"></a>递归代码的编写</h4><p>写递归代码的关键就是找到如何将大问题分解为小问题的规律，并且基于此写出递推公式，然后再推敲终止条件，最后将递推公式和终止条件翻译成代码。</p>
+<h4 id="递归代码理解"><a href="#递归代码理解" class="headerlink" title="递归代码理解"></a>递归代码理解</h4><p>对于递归代码，若试图想清楚整个递和归的过程，实际上是进入了一个思维误区。</p>
+<p>那该如何理解递归代码呢？如果一个问题A可以分解为若干个子问题B、C、D，你可以假设子问题B、C、D已经解决。而且，你只需要思考问题A与子问题B、C、D两层之间的关系即可，不需要一层层往下思考子问题与子子问题，子子问题与子子子问题之间的关系。屏蔽掉递归细节，这样子理解起来就简单多了。</p>
+<p>因此，理解递归代码，就把它抽象成一个递推公式，不用想一层层的调用关系，不要试图用人脑去分解递归的每个步骤。</p>
+<h4 id="递归的常见问题及解决方案"><a href="#递归的常见问题及解决方案" class="headerlink" title="递归的常见问题及解决方案"></a>递归的常见问题及解决方案</h4><ul>
+<li>警惕堆栈溢出，可以声明一个全局变量来控制递归的深度，从而避免堆栈溢出。</li>
+<li>警惕重复计算通过某种数据结构来保存已经求解过的值，从而避免重复计算。</li>
+</ul>
+<h3 id="递归改写为非递归代码"><a href="#递归改写为非递归代码" class="headerlink" title="递归改写为非递归代码"></a>递归改写为非递归代码</h3><p>笼统的讲，所有的递归代码都可以改写为迭代循环的非递归写法。</p>
+<p>抽象出递推公式、初始值和边界条件，然后用迭代循环实现。</p>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Alogorithms/">#Alogorithms</a><a href="/tags/数据结构与算法/">#数据结构与算法</a><a href="/tags/Recursion/">#Recursion</a><a href="/tags/递归/">#递归</a></p></article></div><footer><div class="paginator"><a href="/2019/02/01/beauty-of-algorithms-11-summary-sorting-1/" class="prev">PREV</a><a href="/2019/01/30/beauty-of-algorithms-9-summary-queue/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Thu Jan 31 2019 21:44:24 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-137034489-1",'auto');ga('send','pageview');</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>

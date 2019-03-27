@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Beauty Of Algorithms 1~4 Summary. Introduction · Shinhwa's Site</title><meta name="description" content="Beauty Of Algorithms 1~4 Summary. Introduction - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Beauty Of Algorithms 1~4 Summary. Introduction</h1><div class="post-info">Jan 25, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Alogorithms/" class="post-category">#Alogorithms</a></div><div class="post-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>数据结构和算法很重要！数据结构和算法很重要！数据结构和算法很重要！</p>
+<p>学习数据结构和算法的目的是建立时间复杂度、空间复杂度意识，写出高质量的代码，能够设计基础框架，提升编程技能，训练逻辑思维。算法，是一种解决问题的思路和方法，有机会应用到生活和事业的其他方面。长期看来，大脑思考能力是个人最重要的核心竞争力，算法是为数不多的能够有效训练大脑思考能力的途径之一。<br><a id="more"></a></p>
+<h3 id="知识总览"><a href="#知识总览" class="headerlink" title="知识总览"></a>知识总览</h3><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20160309180753752.jpg" alt></p>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><h4 id="什么是复杂度分析"><a href="#什么是复杂度分析" class="headerlink" title="什么是复杂度分析"></a>什么是复杂度分析</h4><ul>
+<li>数据结构和算法解决是“如何让计算机更快时间、更省空间的解决问题”。</li>
+<li>因此需从执行时间和占用空间两个维度来评估数据结构和算法的性能。</li>
+<li>分别用时间复杂度和空间复杂度两个概念来描述性能问题，二者统称为复杂度。</li>
+<li>复杂度描述的是算法执行时间（或占用空间）与数据规模的增长关系。</li>
+</ul>
+<h4 id="为什么要进行复杂度分析"><a href="#为什么要进行复杂度分析" class="headerlink" title="为什么要进行复杂度分析"></a>为什么要进行复杂度分析</h4><ul>
+<li>和性能测试相比，复杂度分析有不依赖执行环境、成本低、效率高、易操作、指导性强的特点。</li>
+<li>掌握复杂度分析，将能编写出性能更优的代码，有利于降低系统开发和维护成本。</li>
+</ul>
+<h4 id="如何进行复杂度分析"><a href="#如何进行复杂度分析" class="headerlink" title="如何进行复杂度分析"></a>如何进行复杂度分析</h4><ul>
+<li><p><strong>大O表示法</strong></p>
+<p>算法的执行时间与每行代码的执行次数成正比，用T(n) = O(f(n))表示</p>
+<p>其中T(n)表示算法执行总时间，f(n)表示每行代码执行总次数，而n往往表示数据的规模。</p>
+<ul>
+<li><p><strong>特点</strong></p>
+<p>以时间复杂度为例，由于时间复杂度描述的是算法执行时间与数据规模的增长变化趋势，</p>
+<p>所以常量阶、低阶以及系数实际上对这种增长趋势不产决定性影响，所以在做时间复杂度分析时忽略这些项。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>复杂度分析法则</strong></p>
+<ul>
+<li>单段代码看高频：比如循环</li>
+<li>多段代码取最大：比如一段代码中有单循环和多重循环，那么取多重循环的复杂度。</li>
+<li>嵌套代码求乘积：比如递归、多重循环等</li>
+<li>多个规模求加法：比如方法有两个参数控制两个循环的次数，那么这时就取二者复杂度相加。</li>
+</ul>
+</li>
+</ul>
+<h4 id="常用的复杂度级别"><a href="#常用的复杂度级别" class="headerlink" title="常用的复杂度级别"></a>常用的复杂度级别</h4><ul>
+<li><p><strong>多项式阶</strong></p>
+<p>随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。包括</p>
+<ul>
+<li><p>O(1)（常数阶）</p>
+</li>
+<li><p>O(logn)（对数阶）</p>
+</li>
+<li><p>O(n)（线性阶）</p>
+</li>
+<li><p>O(nlogn)（线性对数阶）</p>
+</li>
+<li><p>O(n^2)（平方阶）</p>
+</li>
+<li><p>O(n^3)（立方阶）<br><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1548147142188.png" alt></p>
+</li>
+</ul>
+</li>
+<li><p><strong>非多项式阶</strong></p>
+<p>随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差（不常用）。包括，</p>
+<ul>
+<li>O(2^n)（指数阶</li>
+<li>O(n!)（阶乘阶）</li>
+</ul>
+</li>
+</ul>
+<h4 id="如何掌握好复杂度分析方法"><a href="#如何掌握好复杂度分析方法" class="headerlink" title="如何掌握好复杂度分析方法"></a>如何掌握好复杂度分析方法</h4><p>复杂度分析关键在于多练，所谓孰能生巧。</p>
+<h4 id="复杂度分析的-4-个概念"><a href="#复杂度分析的-4-个概念" class="headerlink" title="复杂度分析的 4 个概念"></a>复杂度分析的 4 个概念</h4><ul>
+<li><p>最坏情况时间复杂度</p>
+<p>代码在最坏情况下执行的时间复杂度</p>
+</li>
+<li><p>最好情况时间复杂度</p>
+<p>代码在最理想情况下执行的时间复杂度</p>
+</li>
+<li><p>平均时间复杂度</p>
+<p>用代码在所有情况下执行的次数的加权平均值表示</p>
+</li>
+<li><p>均摊时间复杂度</p>
+<p>在代码执行的所有复杂度情况中绝大部分是低级别的复杂度，个别情况是高级别复杂度且发生具有时序关系式，可以将个别高级别复杂度均摊到低级别复杂度上。基本上均摊结果就等于低级别复杂度</p>
+</li>
+</ul>
+<h4 id="为什么要引入复杂度分析的-4-个概念"><a href="#为什么要引入复杂度分析的-4-个概念" class="headerlink" title="为什么要引入复杂度分析的 4 个概念"></a>为什么要引入复杂度分析的 4 个概念</h4><p>同一段代码在不同情况下时间复杂度会出现量级差异，为了更全面，更准确的描述代码的时间复杂度，所以引入了这 4 个概念。</p>
+<p>代码复杂度在不同情况下出现量级差别是才需要区分这四种复杂度。大多数情况下，是不需要区分分析他们的。</p>
+<h4 id="如何分析平均、均摊时间复杂度"><a href="#如何分析平均、均摊时间复杂度" class="headerlink" title="如何分析平均、均摊时间复杂度"></a>如何分析平均、均摊时间复杂度</h4><p><strong>平均时间复杂度</strong></p>
+<p>代码在不同情况下复杂度出现量级差别，则用代码所有可能情况下执行次数的加权平均值表示</p>
+<p><strong>均摊时间复杂度</strong></p>
+<p>两个条件满足时使用：</p>
+<ul>
+<li>代码在绝大多数情况下是低级别复杂度，只有极少数情况是高级别复杂度</li>
+<li>低级别和高级别复杂度出现具有时序规律。均摊结果一般都等于低级别复杂度</li>
+</ul>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Alogorithms/">#Alogorithms</a><a href="/tags/数据结构与算法/">#数据结构与算法</a></p></article></div><footer><div class="paginator"><a href="/2019/01/26/beauty-of-algorithms-5-summary-array/" class="prev">PREV</a><a href="/2018/12/29/os-lecture-8-summary/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Fri Jan 25 2019 21:44:24 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-137034489-1",'auto');ga('send','pageview');</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Beauty Of Algorithms 11 Summary. Sorting 1 · Shinhwa's Site</title><meta name="description" content="Beauty Of Algorithms 11 Summary. Sorting 1 - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Beauty Of Algorithms 11 Summary. Sorting 1</h1><div class="post-info">Feb 1, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Alogorithms/" class="post-category">#Alogorithms</a></div><div class="post-content"><h3 id="排序方法"><a href="#排序方法" class="headerlink" title="排序方法"></a>排序方法</h3><p>冒泡排序、插入排序、选择排序、快速排序、归并排序、计数排序、基数排序、桶排序。<br><a id="more"></a></p>
+<h3 id="复杂度归类"><a href="#复杂度归类" class="headerlink" title="复杂度归类"></a>复杂度归类</h3><p>冒泡排序、插入排序、选择排序 O(n^2)</p>
+<p>快速排序、归并排序 O(nlogn)</p>
+<p>计数排序、基数排序、桶排序 O(n)</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549118055203.png" alt></p>
+<h3 id="算法的执行效率"><a href="#算法的执行效率" class="headerlink" title="算法的执行效率"></a>算法的执行效率</h3><ul>
+<li>最好、最坏、平均情况时间复杂度</li>
+<li>时间复杂度的系数、常数和低阶</li>
+<li>比较次数，交换（或移动）次数</li>
+</ul>
+<h3 id="排序算法的稳定性"><a href="#排序算法的稳定性" class="headerlink" title="排序算法的稳定性"></a><strong>排序算法的稳定性</strong></h3><p><strong>稳定性概念</strong></p>
+<p>如果待排序的序列中存在值相等的元素，经过排序之后，相等元素之间原有的先后顺序不变。</p>
+<p><strong>稳定性重要性</strong></p>
+<p>可针对对象的多种属性进行有优先级的排序。</p>
+<p><strong>排序算法的内存损耗</strong></p>
+<p>原地排序算法：特指空间复杂度是O(1)的排序算法。</p>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>冒泡排序只会操作相邻的两个数据。每次冒泡操作都会对相邻的两个元素进行比较，看是否满足大小关系要求，如果不满足就让它俩互换。</p>
+<p><strong>稳定性</strong></p>
+<p>冒泡排序是稳定的排序算法。</p>
+<p><strong>空间复杂度</strong></p>
+<p>冒泡排序是原地排序算法。</p>
+<p><strong>时间复杂度</strong></p>
+<p>最好情况：O(n)。</p>
+<p>最坏情况：O(n^2)。</p>
+<p>平均情况：平均时间复杂度为O(n^2)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(T[] num)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> N = num.length;</span><br><span class="line">        <span class="keyword">boolean</span> isSorted = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = N - <span class="number">1</span>; i &gt; <span class="number">0</span> &amp;&amp; !isSorted; i--) &#123;</span><br><span class="line">            isSorted=<span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;i ; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (less(num[j+<span class="number">1</span>],num[j]))&#123;</span><br><span class="line">                    isSorted=<span class="keyword">false</span>;</span><br><span class="line">                    swap(num,j,j+<span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>插入排序将数组数据分成已排序区间和未排序区间。初始已排序区间只有一个元素，即数组第一个元素。</p>
+<p>在未排序区间取出一个元素插入到已排序区间的合适位置，直到未排序区间为空。</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549118736604.png" alt></p>
+<p><strong>稳定性</strong></p>
+<p>插入排序是稳定的排序算法。</p>
+<p><strong>空间复杂度</strong></p>
+<p>插入排序是原地排序算法。</p>
+<p><strong>时间复杂度</strong></p>
+<p>\1. 最好情况：O(n)。</p>
+<p>\2. 最坏情况：O(n^2)。</p>
+<p>\3. 平均情况：O(n^2)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(T[] num)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> N = num.length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; N; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt; <span class="number">0</span> &amp;&amp; less(num[j], num[j - <span class="number">1</span>]); j--) &#123;</span><br><span class="line">            swap(num, j, j - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>选择排序将数组分成已排序区间和未排序区间。初始已排序区间为空。</p>
+<p>每次从未排序区间中选出最小的元素插入已排序区间的末尾，直到未排序区间为空。</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549118907766.png" alt></p>
+<p><strong>稳定性</strong></p>
+<p>选择排序不是稳定的排序算法。</p>
+<p><strong>空间复杂度</strong></p>
+<p>选择排序是原地排序算法。</p>
+<p><strong>时间复杂度</strong></p>
+<p>都是O(n^2)）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(T[] a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> min = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; a.length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (less(a[j], a[min])) &#123;</span><br><span class="line">                min = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(a, i, min);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p><strong>冒泡排序和插入排序的时间复杂度相同都是O(n^2)，为什么插入排序比冒泡排序更受欢迎？</strong></p>
+<p><a href="https://www.cnblogs.com/yeguo/archive/2013/05/14/3078202.html" target="_blank" rel="noopener">参考这里</a></p>
+<ul>
+<li>对于部分有序的小区间 N，冒泡排序需要排序 N次，而插入排序效率更高</li>
+<li>对于冒泡排序可以改进（参考代码），如果循环完没有做任何交换，说明已经是有序的</li>
+</ul>
+<p><strong>如果数据存储在链表中，三种排序方法的时间复杂会变成怎样？</strong></p>
+<p>假定只能改变节点位置</p>
+<p>冒泡排序，比较次数不变，因为指针，交换数据更加复杂。</p>
+<p>插入排序，比较次数不变，但可以直接插入数据，不需要一个个地后移数据。</p>
+<p>选择排序，比较次数不变，因为指针，交换数据更加复杂。</p>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Alogorithms/">#Alogorithms</a><a href="/tags/数据结构与算法/">#数据结构与算法</a><a href="/tags/Sorting/">#Sorting</a><a href="/tags/排序/">#排序</a></p></article></div><footer><div class="paginator"><a href="/2019/02/02/beauty-of-algorithms-12-summary-sorting-2/" class="prev">PREV</a><a href="/2019/01/31/beauty-of-algorithms-10-summary-recursion/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Fri Feb 01 2019 00:40:05 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-137034489-1",'auto');ga('send','pageview');</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>
