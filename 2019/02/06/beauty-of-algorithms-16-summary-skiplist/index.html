@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Beauty Of Algorithms 16 Summary. Skiplist · Shinhwa's Site</title><meta name="description" content="Beauty Of Algorithms 16 Summary. Skiplist - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Beauty Of Algorithms 16 Summary. Skiplist</h1><div class="post-info">Feb 6, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Alogorithms/" class="post-category">#Alogorithms</a></div><div class="post-content"><h3 id="跳表的概念"><a href="#跳表的概念" class="headerlink" title="跳表的概念"></a>跳表的概念</h3><p>对链表建立n级索引，例如每两个结点提取一个节点到上一层，称之为索引层。<br>图中的down表示down指针，指向下一级结点</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549354564189.png" alt><br><a id="more"></a></p>
+<h3 id="跳表的时间复杂度"><a href="#跳表的时间复杂度" class="headerlink" title="跳表的时间复杂度"></a>跳表的时间复杂度</h3><p><strong>跳表的高度</strong></p>
+<p>跳表的高度是log2n</p>
+<p><strong>跳表的时间复杂度</strong></p>
+<p>跳表中查询某个数据的时间复杂度是O(logn)</p>
+<h3 id="跳表的空间复杂度及优化"><a href="#跳表的空间复杂度及优化" class="headerlink" title="跳表的空间复杂度及优化"></a><strong>跳表的空间复杂度及优化</strong></h3><p><strong>跳表的空间复杂度</strong></p>
+<p>跳表的空间复杂度为O(n)</p>
+<p><strong>优化时间复杂度</strong></p>
+<p>如果链表有n个节点，每3或5个节点抽取抽出一个节点作为上一级索引的节点，</p>
+<p>虽然跳表的空间复杂度仍然是O(n)，但和每2个节点抽取一次相比占用的内存空间少了很多。</p>
+<h3 id="高效的动态插入和删除"><a href="#高效的动态插入和删除" class="headerlink" title="高效的动态插入和删除"></a>高效的动态插入和删除</h3><p><strong>时间复杂度</strong></p>
+<p>跳表本质上就是链表，所以仅插作，插入和删除操时间复杂度就为O(1)，</p>
+<p>但在实际情况中，要插入或删除某个节点，需要先查找到指定位置，而这个查找操作比较费时。</p>
+<p>在跳表中查找操作的时间复杂度是O(logn)，因此跳表的插入和删除操作的是时间复杂度也是O(logn)。</p>
+<p><strong>跳表索引动态更新</strong></p>
+<p>当往跳表中插入数据的时候，可以选择同时将这个数据插入到部分索引层中，</p>
+<p>可以通过随机函数来决定将这个节点插入到哪几级索引中，比如随机函数生成了值K，那就可以把这个节点添加到第1级到第K级索引中。</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549354676649.png" alt></p>
+<h3 id="跳表代码实现"><a href="#跳表代码实现" class="headerlink" title="跳表代码实现"></a>跳表代码实现</h3><p><a href="https://github.com/wangzheng0822/algo/blob/master/java/17_skiplist/SkipList.java" target="_blank" rel="noopener">参考</a></p>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Alogorithms/">#Alogorithms</a><a href="/tags/数据结构与算法/">#数据结构与算法</a><a href="/tags/SkipList/">#SkipList</a><a href="/tags/跳表/">#跳表</a></p></article></div><footer><div class="paginator"><a href="/2019/02/07/beauty-of-algorithms-17-summary-hash-table/" class="prev">PREV</a><a href="/2019/02/05/beauty-of-algorithms-15-summary-binary-search/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Wed Feb 06 2019 00:45:30 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-137034489-1",'auto');ga('send','pageview');</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>

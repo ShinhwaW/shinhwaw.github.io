@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Beauty Of Algorithms 17 Summary. HashTable · Shinhwa's Site</title><meta name="description" content="Beauty Of Algorithms 17 Summary. HashTable - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Beauty Of Algorithms 17 Summary. HashTable</h1><div class="post-info">Feb 7, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Alogorithms/" class="post-category">#Alogorithms</a></div><div class="post-content"><p>散列表Hash Table来源于数组，它借助散列函数对数组这种数据结构进行扩展，利用的是数组支持按照下标随机访问元素的特性。</p>
+<p>需要存储在散列表中的数据我们称为键key，将键转化为数组下标的方法hash(key)称为散列函数，散列函数的计算结果称为散列值。</p>
+<p>将数据存储在散列值对应的数组下标位置。</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549419113789.png" alt><br><a id="more"></a></p>
+<h3 id="设计散列函数"><a href="#设计散列函数" class="headerlink" title="设计散列函数"></a>设计散列函数</h3><p><strong>设计散列函数的基本要求</strong></p>
+<p>散列函数计算得到的散列值是一个非负整数。</p>
+<p>若key1=key2，则hash(key1)=hash(key2)。</p>
+<p>若key≠key2，则hash(key1)≠hash(key2)。</p>
+<p>当空闲位置越来越少，散列值冲突的概率越来越大，也就无法满足第三条。</p>
+<h3 id="散列冲突的解决方法"><a href="#散列冲突的解决方法" class="headerlink" title="散列冲突的解决方法"></a>散列冲突的解决方法</h3><h4 id="开放寻址法"><a href="#开放寻址法" class="headerlink" title="开放寻址法"></a><strong>开放寻址法</strong></h4><ul>
+<li><p><strong>线性探测</strong></p>
+<p>开放寻址法会导致占用删除元素的位置，这样会导致原来的算法失效。</p>
+<p>所以线性探测法的删除操作是将要删除的元素标记为deleted，当要插入数据时遇到这种位置就继续向下探测。</p>
+</li>
+<li><p><strong>二次探测</strong></p>
+<p>线性探测法每次探测的步长为1，即在数组中一个一个探测，比如hash(key)+1,hash(key)+2…</p>
+<p>而二次探测的步长变为原来的平方hash(key)+1^2,hash(key)+2^2…</p>
+</li>
+<li><p><strong>双重散列</strong></p>
+<p>使用一组散列函数，先使用第一个，如果有冲突就换下一个，直到找到空闲位置为止。</p>
+</li>
+</ul>
+<p><strong>性能描述</strong></p>
+<p>我们使用装载因子来表示空位多少：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">散列表的装载因子 = 填入表中的元素个数 / 散列表的长度</span><br></pre></td></tr></table></figure>
+<p>装载因子越大，说明空闲位置越少，冲突越多，散列表的性能会下降。</p>
+<h3 id="链表法"><a href="#链表法" class="headerlink" title="链表法"></a>链表法</h3><ul>
+<li><p><strong>插入数据</strong></p>
+<p>当插入的时候，我们需要通过散列函数计算出对应的散列槽位，将其插入到对应的链表中即可，所以插入的时间复杂度为O(1)</p>
+</li>
+<li><p><strong>查找或删除数据</strong></p>
+<p>对于散列比较均匀的散列函数，链表的节点个数k=n/m，其中n表示散列表中数据的个数，m表示散列表中槽的个数。当查找、删除一个元素时，通过散列函数计算对应的槽，然后遍历链表查找或删除，两操作与链表长度k成正比，即时间复杂度为O(k)。</p>
+</li>
+</ul>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549419411662.png" alt></p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p><strong>假设我们有10万条URL访问日志，如何按照访问次数给URL排序</strong></p>
+<p>遍历 10 万条日志，将 URL 做为 KEY ，声明一个访问次数 count 作为散列表值，存入散列表，每次遇到重复的 count++ ,然后对散列表值进行桶排序或者快速排序。</p>
+<p><strong>有两个字符串数组，每个数组大约有10万条字符串，如何快速找出两个数组中相同的字符串</strong></p>
+<p>将其中一个数组以字符串为 KEY， 默认值 value 为 0 存入散列表。然后用第二个数组的元素为 KEY 遍历这个散列表，如果找到相同的KEY ，那么 value  +1 ，最后统计 value&gt;0 的所有 KEY.</p>
+<h2 id="散列表碰撞攻击"><a href="#散列表碰撞攻击" class="headerlink" title="散列表碰撞攻击"></a>散列表碰撞攻击</h2><p>在极端情况下，有些恶意的攻击者，还有可能通过精心构造的数据，使得所有的数据经过散列函数之后，都散列到同一个槽里。</p>
+<p>如果我们使用的是基于链表的冲突解决方法，那这个时候，散列表就会退化为链表，查询的时间复杂度就从 O(1) 急剧退化为 O(n)。</p>
+<h3 id="散列函数的设计"><a href="#散列函数的设计" class="headerlink" title="散列函数的设计"></a>散列函数的设计</h3><ul>
+<li>散列函数的设计不能太复杂。过于复杂的散列函数，势必会消耗很多计算时间，也就间接的影响到散列表的性能</li>
+<li>散列函数生成的值要尽可能随机并且均匀分布，这样才能避免或者最小化散列冲突，而且即便出现冲突，散列到每个槽里的数据也会比较平均，不会出现某个槽内数据特别多的情况</li>
+<li>实际工作中，我们还需要综合考虑各种因素。这些因素有关键字的长度、特点、分布、还有散列表的大小等。</li>
+<li>散列函数的设计方法有很多：数据分析法、直接寻址法、平方取中法、折叠法、随机数等等</li>
+</ul>
+<p><strong>装载因子</strong></p>
+<p>装载因子越大，散列表中的元素越多，空闲位置越少，散列冲突的概率就越大。</p>
+<p>插入数据的过程要多次寻址或者拉很长的链，查找的过程也会变得很慢。</p>
+<p>动态散列表的数据集合是频繁变动的，我们事先无法预估数据个数，无法事先申请一个足够大的散列表。</p>
+<p>数据慢慢加入，装载因子就会慢慢变大，当装载因子大到一定程度之后，散列冲突变得不可接受。</p>
+<p>当装载因子过大时，我们可以进行动态扩容，重新申请一个更大的散列表，将数据搬移到这个新散列表中。</p>
+<p>假设每次扩容我们都申请一个原来散列表大小两倍的空间。如果原来散列表的装载因子是 0.8，扩容之后新散列表的装载因子就下降为原来的一半变成了 0.4。</p>
+<p><strong>避免低效地扩容</strong></p>
+<p>当装载因子已经到达阈值，需要先进行扩容，再插入数据。这个时候，插入数据就会变得很慢，甚至会无法接受。</p>
+<p>举一个极端的例子，如果散列表当前大小为 1GB，要想扩容为原来的两倍大小，那就需要对1GB 的数据重新计算哈希值，并且从原来的散列表搬移到新的散列表。</p>
+<p>为了解决一次性扩容耗时过多的情况，我们可以将扩容操作穿插在插入操作的过程中，分批完成。</p>
+<p>当装载因子触达阈值之后，我们只申请新空间，但并不将老的数据搬移到新散列表中。</p>
+<p>当有新数据要插入时，我们将新数据插入新散列表中，并且从老的散列表中拿出一个数据放入到新散列表。</p>
+<p>每次插入一个数据到散列表，我们都重复上面的过程。</p>
+<p>经过多次插入操作之后，老的散列表中的数据就一点一点全部搬移到新散列表中了。</p>
+<p>对于查询操作，为了兼容了新、老散列表中的数据，我们先从新散列表中查找，如果没有找到，再去老的散列表中查找。</p>
+<h3 id="散列冲突解决方法"><a href="#散列冲突解决方法" class="headerlink" title="散列冲突解决方法"></a>散列冲突解决方法</h3><p><strong>开放寻址法</strong></p>
+<ul>
+<li>优点<ul>
+<li>散列表中的数据都存储在数组中，可以有效地利用 CPU 缓存加快查询速度。</li>
+<li>种方法实现的散列表，序列化起来比较简单。链表法包含指针，序列化起来就没那么容易</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>在开放寻址法中，所有的数据都存储在一个数组中，比起链表法来说，冲突的代价更高</li>
+<li>使用开放寻址法解决冲突的散列表，装载因子的上限不能太大</li>
+<li>这种方法比链表法更浪费内存空间</li>
+</ul>
+</li>
+</ul>
+<p>当数据量比较小、装载因子小的时候，适合采用开放寻址法。</p>
+<p>这也是 Java 中的 <code>ThreadLocalMap</code> 使用开放寻址法解决散列冲突的原因。</p>
+<p><strong>链表法</strong></p>
+<ul>
+<li>优点<ul>
+<li>链表法对内存的利用率比开放寻址法要高。因为链表结点可以在需要的时候再创建，并不需要像开放寻址法那样事先申请好。实际上，这一点也是我们前面讲过的链表优于数组的地方。</li>
+<li>链表法比起开放寻址法，对大装载因子的容忍度更高。开放寻址法只能适用装载因子小于 1 的情况。接近 1 时，就可能会有大量的散列冲突，导致大量的探测、再散列等，性能会下降很多。但是对于链表法来说，只要散列函数的值随机均匀，即便装载因子变成 10，也就是链表的长度变长了而已，虽然查找效率有所下降，但是比起顺序查找还是快很多</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>链表因为要存储指针，所以对于比较小的对象的存储，是比较消耗内存的，还有可能会让内存的消耗翻倍</li>
+<li>而且，因为链表中的结点是零散分布在内存中的，不是连续的。所以对 CPU 缓存是不友好的，这方面对于执行效率也有一定的影响</li>
+</ul>
+</li>
+</ul>
+<p>当如果我们存储的是大对象，即存储的对象的大小远远大于一个指针的大小。那么链表中指针的内存消耗在大对象面前就可以忽略了。</p>
+<p>链表法比起开放寻址法，它更加灵活，支持更多的优化策略，比如用红黑树代替链表。</p>
+<h3 id="工业级散列表举例分析"><a href="#工业级散列表举例分析" class="headerlink" title="工业级散列表举例分析"></a><strong>工业级散列表举例分析</strong></h3><p><strong>初始大小</strong></p>
+<p><code>HashMap</code> 默认的初始大小是 16，这个默认值是可以设置的。可以通过修改默认初始大小，减少动态扩容的次数，这样会大大提高 <code>HashMap</code> 的性能。</p>
+<p><strong>装载因子和动态扩容</strong></p>
+<p>最大装载因子默认是 <code>0.75</code>，当 <code>HashMap</code> 中元素个数超过 <code>0.75*capacity</code>（<code>capacity</code> 表示散列的容量）的时候，就会启动扩容，每次扩容都会扩容为原来的两倍大小。</p>
+<p><strong>散列冲突解决方法</strong></p>
+<p><code>HashMap</code> 底层采用链表法来解决冲突。即使负载因子和散列函数设计得再合理，也免不了会出现拉链过长的情况，一旦出现拉链过长，则会严重影响 <code>HashMap</code> 的性能。</p>
+<p>于是，在 <code>JDK1.8</code> 版本中，为了对 <code>HashMap</code> 做进一步优化，我们引入了红黑树。而当链表长度太长（默认超过 8）时，链表就转换为红黑树。当红黑树结点个数少于 8 个的时候，又会将红黑树转化为链表。</p>
+<p><strong>散列函数</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h = key.hashCode()；</span><br><span class="line">    <span class="keyword">return</span> (h ^ (h &gt;&gt;&gt; <span class="number">16</span>)) &amp; (capitity -<span class="number">1</span>); <span class="comment">//capicity 表示散列表的大小</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>hashCode()</code> 返回的是 Java 对象的 <code>hash code</code>。</p>
+<p>比如 String 类型的对象的 hashCode() 就是下面这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> var1 = <span class="keyword">this</span>.hash;</span><br><span class="line">  <span class="keyword">if</span>(var1 == <span class="number">0</span> &amp;&amp; <span class="keyword">this</span>.value.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">char</span>[] var2 = <span class="keyword">this</span>.value;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> var3 = <span class="number">0</span>; var3 &lt; <span class="keyword">this</span>.value.length; ++var3) &#123;</span><br><span class="line">      var1 = <span class="number">31</span> * var1 + var2[var3];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.hash = var1;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> var1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>如何设计的一个工业级的散列函数？</strong></p>
+</blockquote>
+<p><strong>如果这是一道面试题或者是摆在你面前的实际开发问题，从哪几个方面思考呢</strong></p>
+<p>结合已经学习过的散列知识，我觉得应该有这样几点要求：</p>
+<ul>
+<li>支持快速的查询、插入、删除操作</li>
+<li>内存占用合理，不能浪费过多的内存空间</li>
+<li>性能稳定，极端情况下，散列表的性能也不会退化到无法接受的情况</li>
+</ul>
+<p>如何实现这样一个散列表呢？根据前面讲到的知识从这三个方面来考虑设计思路</p>
+<ul>
+<li>设计一个合适的散列函数</li>
+<li>定义装载因子阈值，并且设计动态扩容策略</li>
+<li>选择合适的散列冲突解决方法</li>
+</ul>
+<h2 id="散列表和链表组合使用"><a href="#散列表和链表组合使用" class="headerlink" title="散列表和链表组合使用"></a>散列表和链表组合使用</h2><h3 id="LRU缓存淘汰算法"><a href="#LRU缓存淘汰算法" class="headerlink" title="LRU缓存淘汰算法"></a>LRU缓存淘汰算法</h3><p>借助散列表，我们可以把LRU缓存淘汰算法的时间复杂度降为O(1)。</p>
+<p>一个缓冲cache系统主要包含以下操作</p>
+<ul>
+<li>往缓存中添加一个数据</li>
+<li>从缓存中删除一个数据</li>
+<li>在缓存中查找一个数据</li>
+</ul>
+<p>单纯采用链表，时间复杂度只能是O(n)。</p>
+<p>将散列表和双向链表结合，就可以降为O(1)，其结构如下图所示：</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549420745673.png" alt></p>
+<p>其中，我们使用双向链表存储数据，<code>data</code>存储数据，<code>prev</code>前驱指针，<code>next</code>后继指针。</p>
+<p>此外，新增加了<code>hnext</code>指针，这个指针就是链表法散列表中的拉链的后继指针。</p>
+<h3 id="如何做到O-1"><a href="#如何做到O-1" class="headerlink" title="如何做到O(1)"></a>如何做到O(1)</h3><ul>
+<li><p><strong>查找</strong></p>
+<p>因为是散列表所以查找一个数据的操作时间复杂度就接近于O(1)</p>
+</li>
+<li><p><strong>删除</strong></p>
+<p>删除一个数据，我们借助散列表再O(1)的时间复杂度里找到该结点，而双向链表有前驱指针，可以直接删除该节点，时间复杂度为O(1)</p>
+</li>
+<li><p><strong>添加</strong></p>
+<p>添加一个数据比较复杂，首先要看其是否已经在缓存中，如果在就将其移动到双向链表的尾部，如果不在就检查缓存满了没，满了就删除双向链表的头结点，再将数据放到双向链表的尾部，如果没有满就直接将数据放大双向链表的尾部</p>
+</li>
+</ul>
+<p>以上操作中，设计查找的操作是散列表完成的，删除节点、插入节点是双向链表完成的，所以时间复杂度是O(1)。</p>
+<h3 id="Redis有序集合"><a href="#Redis有序集合" class="headerlink" title="Redis有序集合"></a>Redis有序集合</h3><p>在有序集合中，每个成员对象有两个重要的属性，键<code>key</code>和分值<code>score</code>。</p>
+<p>我们不仅需要key来查找数据，还会需要用score查找数据。</p>
+<p>细化一下Redis有序集合的操作：</p>
+<ul>
+<li>添加一个成员对象</li>
+<li>按照键值来删除一个成员对象</li>
+<li>按照键值来查找一个成员对象</li>
+<li>按照分值区间查找数据，比如查找积分在[100, 356] 之间的成员对象</li>
+<li>按照分值从小到大排序成员变量</li>
+</ul>
+<p>如果只按照分支将成员对象组织成跳表的结构，那么按照键值删除、查询对象就会很慢。</p>
+<p>我们可以按照键值构建一个散列表，这样按照key来删除、查找一个对象的时间复杂度就都变成了O(1)。</p>
+<h3 id="Java中的LinkedHashMap"><a href="#Java中的LinkedHashMap" class="headerlink" title="Java中的LinkedHashMap"></a>Java中的LinkedHashMap</h3><p>Java 中的<code>LinkedHashMap</code>中的<code>Linked</code>并不是链表法表示散列表的意思，而是双向链表和散列表结合。</p>
+<p><code>LinkedHashMap</code>本身就是一个支持LRU缓存淘汰策略的缓存系统，其数据的存取移动删除规则和LRU一样。</p>
+<h3 id="思考-1"><a href="#思考-1" class="headerlink" title="思考"></a>思考</h3><p><strong>今天讲的几个散列表和链表结合使用的例子里，我们用的都是双向链表。如果把双向链表改成单链表，还能否正常工作呢？为什么呢？</strong></p>
+<p>不能，影响查询性能</p>
+<p><strong>假设猎聘网有 10 万名猎头，每个猎头都可以通过做任务（比如发布职位）来积累积分，然后通过积分来下载简历。</strong></p>
+<p><strong>假设你是猎聘网的一名工程师，如何在内存中存储这 10 万个猎头 ID 和积分信息，让它能够支持这样几个操作：</strong></p>
+<ul>
+<li><p>根据猎头的 ID 快速查找、删除、更新这个猎头的积分信息</p>
+<p>ID 为 KEY，散列表可以实现快速查询，链表法可以实现删除更新。</p>
+</li>
+<li><p>查找积分在某个区间的猎头 ID 列表</p>
+<p>遍历散列表查询积分对应的 ID 列表</p>
+</li>
+<li><p>查找按照积分从小到大排名在第 x 位到第 y 位之间的猎头 …</p>
+<p>遍历散列表</p>
+</li>
+</ul>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Alogorithms/">#Alogorithms</a><a href="/tags/数据结构与算法/">#数据结构与算法</a><a href="/tags/HashTable/">#HashTable</a><a href="/tags/哈希表/">#哈希表</a><a href="/tags/散列表/">#散列表</a></p></article></div><footer><div class="paginator"><a href="/2019/02/08/beauty-of-algorithms-18-summary-hash/" class="prev">PREV</a><a href="/2019/02/06/beauty-of-algorithms-16-summary-skiplist/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Thu Feb 07 2019 00:45:30 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-137034489-1",'auto');ga('send','pageview');</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>

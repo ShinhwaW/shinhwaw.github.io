@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Beauty Of Algorithms 14 Summary. Sorting Enhancement · Shinhwa's Site</title><meta name="description" content="Beauty Of Algorithms 14 Summary. Sorting Enhancement - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Beauty Of Algorithms 14 Summary. Sorting Enhancement</h1><div class="post-info">Feb 4, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Alogorithms/" class="post-category">#Alogorithms</a></div><div class="post-content"><p>排序算法的选择与优化<br><a id="more"></a></p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549177800363.png" alt></p>
+<h3 id="选择排序算法的原则"><a href="#选择排序算法的原则" class="headerlink" title="选择排序算法的原则"></a>选择排序算法的原则</h3><ul>
+<li>线性排序时间复杂度很低但使用场景特殊，如果要写一个通用排序函数，不能选择线性排序</li>
+<li>为了兼顾任意规模数据的排序，一般会首选时间复杂度为O(nlogn)的排序算法来实现排序函数</li>
+<li>同为O(nlogn)的快排和归并排序相比，归并排序不是原地排序算法，所以最优的选择是快排</li>
+</ul>
+<h3 id="优化快速排序"><a href="#优化快速排序" class="headerlink" title="优化快速排序"></a>优化快速排序</h3><p>导致快排时间复杂度降为O(n^2)的原因是分区点选择不合理，最理想的分区点是：</p>
+<p><strong>被分区点分开的两个分区中，数据的数量差不多。</strong></p>
+<p>优化分区点有2种常用方法：</p>
+<ul>
+<li><p><strong>三数取中法</strong></p>
+<p>从区间的首、中、尾分别取一个数，然后比较大小，取中间值作为分区点</p>
+<p>如果要排序的数组比较大，那三数取中可能就不够用了，可能要五数取中或者十数取中</p>
+</li>
+<li><p><strong>随机法</strong></p>
+<p>每次从要排序的区间中，随机选择一个元素作为分区点</p>
+</li>
+<li><p><strong>递归发生堆栈溢出的解决方法</strong></p>
+<p>限制递归深度，一旦递归超过了设置的阈值就停止递归</p>
+<p>在堆上模拟实现一个函数调用栈，手动模拟递归压栈、出栈过程，这样就没有系统栈大小的限制</p>
+</li>
+</ul>
+<h3 id="通用排序函数实现技巧"><a href="#通用排序函数实现技巧" class="headerlink" title="通用排序函数实现技巧"></a>通用排序函数实现技巧</h3><ul>
+<li>数据量不大时，可以采取用空间换时间的思路</li>
+<li>数据量大时，优化快排分区点的选择</li>
+<li>防止堆栈溢出，可以选择在堆上手动模拟调用栈解决</li>
+<li>在排序区间中，当元素个数小于某个常数是，可以考虑使用O(n^2)级别的插入排序</li>
+<li>用哨兵简化代码，每次排序都减少一次判断，尽可能把性能优化到极致</li>
+</ul>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Alogorithms/">#Alogorithms</a><a href="/tags/数据结构与算法/">#数据结构与算法</a></p></article></div><footer><div class="paginator"><a href="/2019/02/05/beauty-of-algorithms-15-summary-binary-search/" class="prev">PREV</a><a href="/2019/02/03/beauty-of-algorithms-13-summary-linear-sorting/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Mon Feb 04 2019 00:45:30 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-137034489-1",'auto');ga('send','pageview');</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>
