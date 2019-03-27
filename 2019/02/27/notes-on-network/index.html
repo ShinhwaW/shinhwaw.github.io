@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> notes-on-network · Shinhwa's Site</title><meta name="description" content="notes-on-network - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">notes-on-network</h1><div class="post-info">Feb 27, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Network/" class="post-category">#Network</a></div><div class="post-content"><h3 id="网络性能指标"><a href="#网络性能指标" class="headerlink" title="网络性能指标"></a>网络性能指标</h3><ul>
+<li><p>带宽</p>
+<p>表示链路的最大传输速率，单位是 b/s （ 比特 / 秒 ) 。常见的带宽有 1000M、10G、40G、100G 等。</p>
+</li>
+<li><p>吞吐量</p>
+<p>表示没有丢包时的最大数据传输速率，单位通常是 b/s （ 比特 / 秒 )  或者 B/s ( 字节 / 秒 ) 。</p>
+</li>
+<li><p>延时</p>
+<p>表示从网络请求发出后，一直到收到远端响应，所需要的时间延迟。</p>
+</li>
+<li><p>PPS ( Packet Per Second )</p>
+<p>表示以网络包为单位的传输速率。PPS 通常用来评估网络的转发能力。</p>
+<a id="more"></a>
+<h3 id="tcpdump-和-Wireshark"><a href="#tcpdump-和-Wireshark" class="headerlink" title="tcpdump 和 Wireshark"></a>tcpdump 和 Wireshark</h3></li>
+</ul>
+<p>这个例子只是执行 ping 指令的一个例子</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -nn udp port 53 or host x.x.x.x -w ping.pcap</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-nn 不解析抓包中的域名（不反向解析）、协议以及端口号</li>
+<li>udp port 53 只显示 UDP 协议的端口号（包括源端口和目的端口）为 53 的包</li>
+<li>host x.x.x.x 只显示 IP 地址（包括原地址和目的地址）为 x.x.x.x 的包</li>
+<li>or 或的关系</li>
+</ul>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552900591970.png" alt></p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552900605148.png" alt></p>
+<p>HTTP 的一个例子，便于理解 TCP 三次握手和四次挥手</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -nn host example.com -w web.pcap</span><br><span class="line">curl example.com</span><br></pre></td></tr></table></figure>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552901484205.png" alt></p>
+<p>可以看到TCP 三次握手和四次挥手的请求</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552901518443.png" alt></p>
+<p>顺便复习一下流程：</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552901543490.png" alt></p>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Network/">#Network</a></p></article></div><footer><div class="paginator"><a href="/2019/02/26/leetcode-206-reverse-linked-list/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Wed Feb 27 2019 21:44:24 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>
