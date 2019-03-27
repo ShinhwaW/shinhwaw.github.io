@@ -8,12 +8,12 @@
 <li><p>延时</p>
 <p>表示从网络请求发出后，一直到收到远端响应，所需要的时间延迟。</p>
 </li>
-<li><p>PPS ( Packet Per Second )</p>
-<p>表示以网络包为单位的传输速率。PPS 通常用来评估网络的转发能力。</p>
-<a id="more"></a></li>
-<li><h3 id="tcpdump-和-Wireshark"><a href="#tcpdump-和-Wireshark" class="headerlink" title="tcpdump 和 Wireshark"></a>tcpdump 和 Wireshark</h3></li>
+<li><p>PPS ( Packet Per Second )<br>表示以网络包为单位的传输速率。PPS 通常用来评估网络的转发能力。</p>
+<a id="more"></a>
+</li>
 </ul>
-<p>这个例子只是执行 ping 指令的一个例子</p>
+<p>一些工具</p>
+<h3 id="tcpdump-和-Wireshark"><a href="#tcpdump-和-Wireshark" class="headerlink" title="tcpdump 和 Wireshark"></a>tcpdump 和 Wireshark</h3><p>这个例子只是执行 ping 指令的一个例子</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -nn udp port 53 or host x.x.x.x -w ping.pcap</span><br></pre></td></tr></table></figure>
 <ul>
 <li>-nn 不解析抓包中的域名（不反向解析）、协议以及端口号</li>

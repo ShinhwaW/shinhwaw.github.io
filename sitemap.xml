@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2019/02/22/leetcode-136-single-number/</loc>
+    <loc>http://yoursite.com/2019/02/27/notes-on-network/</loc>
     
-    <lastmod>2019-03-27T03:40:20.074Z</lastmod>
+    <lastmod>2019-03-27T03:53:41.305Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/02/27/notes-on-network/</loc>
+    <loc>http://yoursite.com/2019/02/23/leetcode-283-move-zeroes/</loc>
     
-    <lastmod>2019-03-27T03:39:58.111Z</lastmod>
+    <lastmod>2019-03-27T03:50:41.236Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/02/22/leetcode-136-single-number/</loc>
+    
+    <lastmod>2019-03-27T03:42:43.306Z</lastmod>
     
   </url>
   
@@ -40,13 +47,6 @@
     <loc>http://yoursite.com/2019/02/18/leetcode-461-hamming-distance/</loc>
     
     <lastmod>2019-03-27T02:33:58.795Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/02/23/leetcode-283-move-zeroes/</loc>
-    
-    <lastmod>2019-03-27T02:33:38.245Z</lastmod>
     
   </url>
   
