@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-27T03:13:48.603Z</updated>
+  <updated>2019-03-27T03:29:20.994Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>notes-on-network</title>
+    <title>Notes On Network</title>
     <link href="http://yoursite.com/2019/02/27/notes-on-network/"/>
     <id>http://yoursite.com/2019/02/27/notes-on-network/</id>
     <published>2019-02-27T13:44:24.000Z</published>
-    <updated>2019-03-27T03:13:48.603Z</updated>
+    <updated>2019-03-27T03:29:20.994Z</updated>
     
     <content type="html"><![CDATA[<h3 id="网络性能指标"><a href="#网络性能指标" class="headerlink" title="网络性能指标"></a>网络性能指标</h3><ul><li><p>带宽</p><p>表示链路的最大传输速率，单位是 b/s （ 比特 / 秒 ) 。常见的带宽有 1000M、10G、40G、100G 等。</p></li><li><p>吞吐量</p><p>表示没有丢包时的最大数据传输速率，单位通常是 b/s （ 比特 / 秒 )  或者 B/s ( 字节 / 秒 ) 。</p></li><li><p>延时</p><p>表示从网络请求发出后，一直到收到远端响应，所需要的时间延迟。</p></li><li><p>PPS ( Packet Per Second )</p><p>表示以网络包为单位的传输速率。PPS 通常用来评估网络的转发能力。</p><a id="more"></a><h3 id="tcpdump-和-Wireshark"><a href="#tcpdump-和-Wireshark" class="headerlink" title="tcpdump 和 Wireshark"></a>tcpdump 和 Wireshark</h3></li></ul><p>这个例子只是执行 ping 指令的一个例子</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -nn udp port 53 or host x.x.x.x -w ping.pcap</span><br></pre></td></tr></table></figure><ul><li>-nn 不解析抓包中的域名（不反向解析）、协议以及端口号</li><li>udp port 53 只显示 UDP 协议的端口号（包括源端口和目的端口）为 53 的包</li><li>host x.x.x.x 只显示 IP 地址（包括原地址和目的地址）为 x.x.x.x 的包</li><li>or 或的关系</li></ul><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552900591970.png" alt></p><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552900605148.png" alt></p><p>HTTP 的一个例子，便于理解 TCP 三次握手和四次挥手</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -nn host example.com -w web.pcap</span><br><span class="line">curl example.com</span><br></pre></td></tr></table></figure><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552901484205.png" alt></p><p>可以看到TCP 三次握手和四次挥手的请求</p><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552901518443.png" alt></p><p>顺便复习一下流程：</p><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1552901543490.png" alt></p>]]></content>
     
