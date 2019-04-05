@@ -37,11 +37,11 @@
 <h4 id="redolog两阶段提交"><a href="#redolog两阶段提交" class="headerlink" title="redolog两阶段提交"></a>redolog两阶段提交</h4><p>redo log 和binlog都可以用于表示事务的提交状态，而两阶段提交就是让这两个状态保持逻辑上的一致。</p>
 <h2 id="事务隔离"><a href="#事务隔离" class="headerlink" title="事务隔离"></a>事务隔离</h2><p>事务：ACID（Atomicity、Consistency、Isolation、Durability，即原子性、一致性、隔离性、持久性）</p>
 <p>隔离级别：读未提交（read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（serializable ）</p>
-<p>事务隔离的实现：在MySQL中，实际上每条记录在更新的时候都会同时记录一条回滚操作。记录上的最新值，通过回滚操作，都可以得到前一个状态的值。</p>
+<p>事务隔离的实现：在 MySQL 中，实际上每条记录在更新的时候都会同时记录一条回滚操作。记录上的最新值，通过回滚操作，都可以得到前一个状态的值。</p>
 <p>长事务：系统里面会存在很老的事务视图。由于这些事务随时可能访问数据库里面的任何数据，所以这个事务提交之前，数据库里面它可能用到的回滚记录都必须保留，这就会导致大量占用存储空间。</p>
 <h4 id="事务启动方式"><a href="#事务启动方式" class="headerlink" title="事务启动方式"></a>事务启动方式</h4><ul>
-<li>显式启动事务语句， begin 或 start transaction。配套的提交语句是commit，回滚语句是rollback</li>
-<li>set autocommit=0，这个命令会将这个线程的自动提交关掉。意味着如果你只执行一个select语句，这个事务就启动了，而且并不会自动提交。这个事务持续存在直到你主动执行commit 或 rollback 语句，或者断开连接</li>
+<li>显式启动事务语句， begin 或 start transaction。配套的提交语句是 commit，回滚语句是 rollback</li>
+<li>set autocommit=0，这个命令会将这个线程的自动提交关掉。意味着如果你只执行一个 select 语句，这个事务就启动了，而且并不会自动提交。这个事务持续存在直到你主动执行 commit  或  rollback 语句，或者断开连接</li>
 </ul>
 <p>建议总是使用set autocommit=1, 通过显式语句的方式来启动事务。避免长连接导致长事务。</p>
 <h4 id="查询长事务"><a href="#查询长事务" class="headerlink" title="查询长事务"></a>查询长事务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from information_schema.innodb_trx where TIME_TO_SEC(timediff(now(),trx_started))&gt;60; -- 查找持续时间超过60s的事务</span><br></pre></td></tr></table></figure>
@@ -52,18 +52,24 @@
 </ul>
 <h3 id="InnoDB-的索引模型"><a href="#InnoDB-的索引模型" class="headerlink" title="InnoDB 的索引模型"></a>InnoDB 的索引模型</h3><h4 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h4><ul>
 <li><p>主键索引</p>
-<p>主键索引的叶子节点存的是整行数据。在InnoDB里，主键索引也被称为聚簇索引（clustered index）</p>
+<p>主键索引的叶子节点存的是整行数据。在 InnoDB 里，主键索引也被称为聚簇索引（clustered index）</p>
 </li>
 <li><p>非主键索引</p>
-<p>非主键索引的叶子节点内容是主键的值。在InnoDB里，非主键索引也被称为二级索引（secondary index）</p>
+<p>非主键索引的叶子节点内容是主键的值。在 InnoDB 里，非主键索引也被称为二级索引（secondary index）</p>
 </li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> create table T(</span></span><br><span class="line">id int primary key, </span><br><span class="line">k int not null, </span><br><span class="line">name varchar(16),</span><br><span class="line">index (k))engine=InnoDB;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>如果语句是select * from T where ID=500，即主键查询方式，则只需要搜索ID这棵B+树；</li>
-<li>如果语句是select * from T where k=5，即普通索引查询方式，则需要先搜索k索引树，得到ID的值为500，再到ID索引树搜索一次。这个过程称为回表。</li>
+<li>如果语句是 select * from T where ID=500，即主键查询方式，则只需要搜索 ID 这棵 <a href="https://www.shinhwa.wang/2019/04/04/binary-tree-B-tree-B+-Tree/" target="_blank" rel="noopener">B+ 树</a> ；</li>
+<li>如果语句是 select * from T where k=5，即普通索引查询方式，则需要先搜索 k 索引树，得到 ID 的值为500，再到 ID 索引树搜索一次。这个过程称为回表。</li>
 </ul>
 <p>也就是说，基于非主键索引的查询需要多扫描一棵索引树。因此，我们在应用中应该<strong>尽量使用主键查询</strong>。</p>
+<h4 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h4><p>如果执行的语句是select ID from T where k between 3 and 5，这时只需要查ID的值，而ID的值已经在k索引树上了，因此可以直接提供查询结果，不需要回表。也就是说，在这个查询里面，索引k已经“覆盖了”我们的查询需求，我们称为覆盖索引。</p>
+<p><strong>由于覆盖索引可以减少树的搜索次数，显著提升查询性能，所以使用覆盖索引是一个常用的性能优化手段。</strong></p>
+<h4 id="最左前缀原则"><a href="#最左前缀原则" class="headerlink" title="最左前缀原则"></a>最左前缀原则</h4><p>只要满足最左前缀，就可以利用索引来加速检索。这个最左前缀可以是联合索引的最左N个字段，也可以是字符串索引的最左M个字符。</p>
+<h4 id="索引下推-（index-condition-pushdown"><a href="#索引下推-（index-condition-pushdown" class="headerlink" title="索引下推 （index condition pushdown)"></a>索引下推 （index condition pushdown)</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from tuser <span class="built_in">where</span> name like <span class="string">'张%'</span> and age=10 and ismale=1;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190405153458.png" alt></p>
+<p><strong>InnoDB在(name,age)索引内部就判断了age是否等于10，对于不等于10的记录，直接判断并跳过。在我们的这个例子中，只需要对ID4、ID5这两条记录回表取数据判断，就只需要回表2次</strong></p>
 </div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/MySQL/">#MySQL</a><a href="/tags/Database/">#Database</a><a href="/tags/数据库/">#数据库</a></p></article></div><footer><div class="paginator"><a href="/2019/04/04/binary-tree-B-tree-B+-Tree/" class="prev">PREV</a><a href="/2019/02/27/notes-on-network/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
     clientID: 'abc8dd436b794dd57f1a',
     clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
