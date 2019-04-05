@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Binary tree，B tree, B+ Tree · Shinhwa's Site</title><meta name="description" content="Binary tree，B tree, B+ Tree - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Binary tree，B tree, B+ Tree</h1><div class="post-info">Apr 4, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Algorithms/" class="post-category">#Algorithms</a></div><div class="post-content"><p>平衡二叉树、B树、B+树、B*树 </p>
+<a id="more"></a>
+<h2 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a><strong>平衡二叉树</strong></h2><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a><strong>概念</strong></h4><p>平衡二叉树是基于二分法的策略提高数据的查找速度的二叉树的数据结构</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>平衡二叉树是采用二分法思维把数据按规则组装成一个树形结构的数据，用这个树形结构的数据减少无关数据的检索，大大的提升了数据检索的速度；平衡二叉树的数据结构组装过程有以下规则：</p>
+<ul>
+<li>非叶子节点只能允许最多两个子节点存在</li>
+<li>每一个非叶子节点数据分布规则为左边的子节点小当前节点的值，右边的子节点大于当前节点的值(这里值是基于自己的算法规则而定的，比如hash值)</li>
+</ul>
+<p>平衡树的层级结构：因为平衡二叉树查询性能和树的层级（h高度）成反比，h值越小查询越快、为了保证树的结构左右两端数据大致平衡降低二叉树的查询难度一般会采用一种算法机制实现节点数据结构的平衡，实现了这种算法的有比如AVL、<a href="https://link.zhihu.com/?target=http%3A//baike.baidu.com/item/Treap" target="_blank" rel="noopener">Treap</a>、红黑树，使用平衡二叉树能保证数据的左右两边的节点层级相差不会大于1.，通过这样避免树形结构由于删除增加变成线性链表影响查询效率，保证数据平衡的情况下查找数据的速度近于二分法查找；</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190405115440.png" alt></p>
+<p>总结平衡二叉树特点：</p>
+<ul>
+<li>非叶子节点最多拥有两个子节点</li>
+<li>非叶子节值大于左边子节点、小于右边子节点</li>
+<li>树的左右两边的层级数相差不会大于1</li>
+<li>没有值相等重复的节点</li>
+</ul>
+<h2 id="B树-B-tree"><a href="#B树-B-tree" class="headerlink" title="B树(B-tree)"></a><strong>B树(B-tree)</strong></h2><p>注意:之前有看到有很多文章把B树和B-tree理解成了两种不同类别的树，其实这两个是同一种树</p>
+<h4 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h4><p>B树和平衡二叉树稍有不同的是B树属于多叉树又名平衡多路查找树（查找路径不只两个），数据库索引技术里大量使用者B树和B+树的数据结构，让我们来看看他有什么特点;</p>
+<h4 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h4><ul>
+<li>排序方式：所有节点关键字是按递增次序排列，并遵循左小右大原则</li>
+<li>节点数：非叶节点的子节点数&gt;1，且&lt;=M ，且M&gt;=2，空树除外（注：M阶代表一个树节点最多有多少个查找路径，M=M路,当M=2则是2叉树,M=3则是3叉）</li>
+<li>关键字数：枝节点的关键字数量大于等于ceil(m/2)-1个且小于等于M-1个（注：ceil()是个朝正无穷方向取整的函数 如ceil(1.1)结果为2)</li>
+<li>所有叶子节点均在同一层、叶子节点除了包含了关键字和关键字记录的指针外也有指向其子节点的指针只不过其指针地址都为null对应下图最后一层节点的空格子</li>
+</ul>
+<p>最后我们用一个图和一个实际的例子来理解B树（这里为了理解方便我就直接用实际字母的大小来排列C&gt;B&gt;A）</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190405115645.png" alt></p>
+<h4 id="B树的查询流程"><a href="#B树的查询流程" class="headerlink" title="B树的查询流程"></a><strong>B树的查询流程</strong></h4><p>如上图我要从上图中找到E字母，查找流程如下</p>
+<ul>
+<li>获取根节点的关键字进行比较，当前根节点关键字为M，E&lt;M（26个字母顺序），所以往找到指向左边的子节点（二分法规则，左小右大，左边放小于当前节点值的子节点、右边放大于当前节点值的子节点）</li>
+<li>拿到关键字D和G，D&lt;E&lt;G 所以直接找到D和G中间的节点</li>
+<li>拿到E和F，因为E=E 所以直接返回关键字和指针信息（如果树结构里面没有包含所要查找的节点则返回null）</li>
+</ul>
+<h4 id="B树的插入节点流程"><a href="#B树的插入节点流程" class="headerlink" title="B树的插入节点流程"></a><strong>B树的插入节点流程</strong></h4><p>定义一个5阶树（平衡5路查找树;），现在我们要把3、8、31、11、23、29、50、28 这些数字构建出一个5阶树出来</p>
+<p>遵循规则</p>
+<ul>
+<li>节点拆分规则：当前是要组成一个5路查找树，那么此时m=5,关键字数必须&lt;=5-1（这里关键字数&gt;4就要进行节点拆分）</li>
+<li>排序规则：满足节点本身比左边节点大，比右边节点小的排序规则</li>
+</ul>
+<p>先插入 3、8、31、11</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190405115817.png" alt></p>
+<p>再插入23、29</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190405144609.png" alt></p>
+<p>再插入50、28</p>
+<p><img src="C:\develop\blog\newblog\source\_posts\assets\1554446788867.png" alt="1554446788867"></p>
+<h4 id="B树节点的删除"><a href="#B树节点的删除" class="headerlink" title="B树节点的删除"></a><strong>B树节点的删除</strong></h4><p><strong>规则</strong></p>
+<ul>
+<li>节点合并规则：当前是要组成一个5路查找树，那么此时m=5,关键字数必须大于等于ceil（5/2）（这里关键字数&lt;2就要进行节点合并）</li>
+<li>满足节点本身比左边节点大，比右边节点小的排序规则</li>
+<li>关键字数小于二时先从子节点取，子节点没有符合条件时就向向父节点取，取中间值往父节点放</li>
+</ul>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190405144759.png" alt></p>
+<p><strong>特点</strong></p>
+<p>B树相对于平衡二叉树的不同是，每个节点包含的关键字增多了，特别是在B树应用到数据库中的时候，数据库充分利用了磁盘块的原理（磁盘数据存储是采用块的形式存储的，每个块的大小为4K，每次IO进行数据读取时，同一个磁盘块的数据可以一次性读取出来）把节点大小限制和充分使用在磁盘快大小范围；把树的节点关键字增多后树的层级比原来的二叉树少了，减少数据查找的次数和复杂度</p>
+<h2 id="B-树"><a href="#B-树" class="headerlink" title="B+ 树"></a><strong>B+ 树</strong></h2><p><strong>概念</strong></p>
+<p>B+树是B树的一个升级版，相对于B树来说B+树更充分的利用了节点的空间，让查询速度更加稳定，其速度完全接近于二分法查找。为什么说B+树查找的效率要比B树更高、更稳定；我们先看看两者的区别</p>
+<p><strong>规则</strong></p>
+<ul>
+<li>B+跟B树不同B+树的<strong>非叶子</strong>节点不保存关键字记录的指针，只进行数据索引，这样使得B+树每个<strong>非叶子</strong>节点所能保存的关键字大大增加</li>
+<li>B+树<strong>叶子</strong>节点保存了父节点的所有关键字记录的指针，所有数据地址必须要到叶子节点才能获取到。所以每次数据查询的次数都一样</li>
+<li>B+树叶子节点的关键字从小到大有序排列，左边结尾数据都会保存右边节点开始数据的指针</li>
+<li>非叶子节点的子节点数=关键字数（来源百度百科）（根据各种资料 这里有两种算法的实现方式，另一种为非叶节点的关键字数=子节点数-1（来源维基百科)，虽然他们数据排列结构不一样，但其原理还是一样的Mysql 的B+树是用第一种方式实现）</li>
+</ul>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190405145634.png" alt></p>
+<p><strong>（百度百科算法结构示意图）</strong></p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190405150344.png" alt></p>
+<p><strong>（维基百科算法结构示意图）</strong></p>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a><strong>特点</strong></h4><ul>
+<li>B+<strong>树的层级更少</strong>：相较于B树B+每个<strong>非叶子</strong>节点存储的关键字数更多，树的层级更少所以查询数据更快</li>
+<li>B+<strong>树查询速度更稳定</strong>：B+所有关键字数据地址都存在<strong>叶子</strong>节点上，所以每次查找的次数都相同所以查询速度要比B树更稳定</li>
+<li>B+<strong>树天然具备排序功能：</strong>B+树所有的<strong>叶子</strong>节点数据构成了一个有序链表，在查询大小区间的数据时候更方便，数据紧密性很高，缓存的命中率也会比B树高</li>
+<li>B+<strong>树全节点遍历更快：</strong>B+树遍历整棵树只需要遍历所有的<strong>叶子</strong>节点即可，，而不需要像B树一样需要对每一层进行遍历，这有利于数据库做全表扫描</li>
+<li><strong>B树</strong>相对于<strong>B+树</strong>的优点是，如果经常访问的数据离根节点很近，而<strong>B树</strong>的<strong>非叶子</strong>节点本身存有关键字其数据的地址，所以这种数据检索的时候会要比<strong>B+树</strong>快</li>
+</ul>
+<h2 id="B-树-1"><a href="#B-树-1" class="headerlink" title="B*树"></a><strong>B*树</strong></h2><h4 id="规则-1"><a href="#规则-1" class="headerlink" title="规则"></a><strong>规则</strong></h4><p>B*树是B+树的变种，相对于B+树他们的不同之处如下：</p>
+<ul>
+<li>首先是关键字个数限制问题，B+树初始化的关键字初始化个数是cei(m/2)，b<em>树的初始化个数为（cei(2/3</em>m)）</li>
+<li>B+树节点满时就会分裂，而B*树节点满时会检查兄弟节点是否满（因为每个节点都有指向兄弟的指针），如果兄弟节点未满则向兄弟节点转移关键字，如果兄弟节点已满，则从当前节点和兄弟节点各拿出1/3的数据创建一个新的节点出来</li>
+</ul>
+<h4 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a><strong>特点</strong></h4><p>在B+树的基础上因其初始化的容量变大，使得节点空间使用率更高，而又存有兄弟节点的指针，可以向兄弟节点转移关键字的特性使得B*树额分解次数变得更少</p>
+<p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190405150527.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><ul>
+<li><p><strong>相同思想和策略</strong></p>
+<p>从平衡二叉树、B树、B+树、B*树总体来看它们的贯彻的思想是相同的，都是采用二分法和数据平衡策略来提升查找数据的速度</p>
+</li>
+<li><p><strong>不同的方式的磁盘空间利用</strong></p>
+<p>不同点是他们一个一个在演变的过程中通过IO从磁盘读取数据的原理进行一步步的演变，每一次演变都是为了让节点的空间更合理的运用起来，从而使树的层级减少达到快速查找数据的目的</p>
+</li>
+</ul>
+<p>文章转载自 <a href="https://zhuanlan.zhihu.com/p/27700617" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27700617</a></p>
+<p>参考</p>
+<p>附（二分法查找）：<a href="https://zhuanlan.zhihu.com/p/27597160" target="_blank" rel="noopener">二分法查找原理 - 知乎专栏</a></p>
+<p>附（B、B+、B<em>树）：[从B树、B+树、B</em>树谈到R 树](<a href="https://link.zhihu.com/?target=http%3A//blog.csdn.net/v_JULY_v/article/details/6530142/" target="_blank" rel="noopener">https://link.zhihu.com/?target=http%3A//blog.csdn.net/v_JULY_v/article/details/6530142/</a>)</p>
+<p>附（B、B+、B*树）：<a href="https://link.zhihu.com/?target=http%3A//blog.csdn.net/endlu/article/details/51720299" target="_blank" rel="noopener">end’s coding life</a></p>
+<p>附：<a href="https://link.zhihu.com/?target=https%3A//www.cnblogs.com/nullzx/p/8729425.html" target="_blank" rel="noopener">B树和B+树的插入、删除图文详解 - nullzx - 博客园</a></p>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Algorithms/">#Algorithms</a><a href="/tags/数据结构与算法/">#数据结构与算法</a><a href="/tags/Tree/">#Tree</a><a href="/tags/树/">#树</a></p></article></div><footer><div class="paginator"><a href="/2019/03/02/mysql-reading-note/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Thu Apr 04 2019 18:29:57 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-137034489-1",'auto');ga('send','pageview');</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>
