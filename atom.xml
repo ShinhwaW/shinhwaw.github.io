@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-06T04:46:36.595Z</updated>
+  <updated>2019-04-06T04:48:54.839Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>helloworld</title>
+    <link href="http://yoursite.com/2019/04/06/test/"/>
+    <id>http://yoursite.com/2019/04/06/test/</id>
+    <published>2019-04-06T04:48:31.000Z</published>
+    <updated>2019-04-06T04:48:54.839Z</updated>
+    
+    <content type="html"><![CDATA[<p>hello world</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;hello world&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Binary tree B tree B+ Tree</title>
@@ -545,30 +567,6 @@
       <category term="BinarySearch" scheme="http://yoursite.com/tags/BinarySearch/"/>
     
       <category term="二分查找" scheme="http://yoursite.com/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Beauty Of Algorithms 14 Summary. Sorting Enhancement</title>
-    <link href="http://yoursite.com/2019/02/04/beauty-of-algorithms-14-summary-sorting-enhancement/"/>
-    <id>http://yoursite.com/2019/02/04/beauty-of-algorithms-14-summary-sorting-enhancement/</id>
-    <published>2019-02-03T16:45:30.000Z</published>
-    <updated>2019-03-31T15:02:57.210Z</updated>
-    
-    <content type="html"><![CDATA[<p>排序算法的选择与优化<br><a id="more"></a></p><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549177800363.png" alt></p><h3 id="选择排序算法的原则"><a href="#选择排序算法的原则" class="headerlink" title="选择排序算法的原则"></a>选择排序算法的原则</h3><ul><li>线性排序时间复杂度很低但使用场景特殊，如果要写一个通用排序函数，不能选择线性排序</li><li>为了兼顾任意规模数据的排序，一般会首选时间复杂度为O(nlogn)的排序算法来实现排序函数</li><li>同为O(nlogn)的快排和归并排序相比，归并排序不是原地排序算法，所以最优的选择是快排</li></ul><h3 id="优化快速排序"><a href="#优化快速排序" class="headerlink" title="优化快速排序"></a>优化快速排序</h3><p>导致快排时间复杂度降为O(n^2)的原因是分区点选择不合理，最理想的分区点是：</p><p><strong>被分区点分开的两个分区中，数据的数量差不多。</strong></p><p>优化分区点有2种常用方法：</p><ul><li><p><strong>三数取中法</strong></p><p>从区间的首、中、尾分别取一个数，然后比较大小，取中间值作为分区点</p><p>如果要排序的数组比较大，那三数取中可能就不够用了，可能要五数取中或者十数取中</p></li><li><p><strong>随机法</strong></p><p>每次从要排序的区间中，随机选择一个元素作为分区点</p></li><li><p><strong>递归发生堆栈溢出的解决方法</strong></p><p>限制递归深度，一旦递归超过了设置的阈值就停止递归</p><p>在堆上模拟实现一个函数调用栈，手动模拟递归压栈、出栈过程，这样就没有系统栈大小的限制</p></li></ul><h3 id="通用排序函数实现技巧"><a href="#通用排序函数实现技巧" class="headerlink" title="通用排序函数实现技巧"></a>通用排序函数实现技巧</h3><ul><li>数据量不大时，可以采取用空间换时间的思路</li><li>数据量大时，优化快排分区点的选择</li><li>防止堆栈溢出，可以选择在堆上手动模拟调用栈解决</li><li>在排序区间中，当元素个数小于某个常数是，可以考虑使用O(n^2)级别的插入排序</li><li>用哨兵简化代码，每次排序都减少一次判断，尽可能把性能优化到极致</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;排序算法的选择与优化&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Algorithms" scheme="http://yoursite.com/categories/Algorithms/"/>
-    
-    
-      <category term="Algorithms" scheme="http://yoursite.com/tags/Algorithms/"/>
-    
-      <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
