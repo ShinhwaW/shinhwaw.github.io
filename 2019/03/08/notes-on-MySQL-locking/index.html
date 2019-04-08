@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Notes On MySQL Locking · Shinhwa's Site</title><meta name="description" content="Notes On MySQL Locking - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Notes On MySQL Locking</h1><div class="post-info">Mar 8, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Database/" class="post-category">#Database</a></div><div class="post-content"><p>MySQL里面的锁可以分为：全局锁、表级锁、行级锁<br><a id="more"></a></p>
+<h3 id="全局锁"><a href="#全局锁" class="headerlink" title="全局锁"></a>全局锁</h3><ul>
+<li>对整个数据库实例加锁。</li>
+<li>使用场景：做全库逻辑备份时，为了保证备份期间的库在同一个逻辑时间点，即一致性视图（类似于可重复读隔离级别的效果）</li>
+</ul>
+<p>全局锁两种方式：</p>
+<ul>
+<li><em>Flush tables with read lock(FTWRL)</em> 使数据库处于只读状态，数据的增删改、数据定义语句和更新类事务的提交语句都会被阻塞</li>
+<li><em>mysqldump</em> 官方自带的逻辑备份工具，参数 <em>-single-transaction</em> 会在导数据之前启动一个事务，确保拿到一致性视图</li>
+</ul>
+<p>以上两种方式不同点：</p>
+<p>使用 <em>mysqldump</em> 前提是 <strong>引擎支持隔离级别</strong> ，所以<em>single-transaction</em>方法只适用于支持事务引擎的库；MyISAM不支持事务，所以只能使用FTWRL命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global readonly = true</span><br></pre></td></tr></table></figure>
+<p>这条语句也可以做到全库只读，但是不建议使用：</p>
+<ul>
+<li>有时 readonly 会用来判断库是主库还是备库，因此修改global变量的方式影响会比较大</li>
+<li>异常处理方面：FTWRL后客户端异常断开，MySQL会自动释放全局锁，库恢复正常；设置readonly，客户端异常，则会保持readonly，会导致长时间处于不可写状态，风险较高</li>
+</ul>
+<blockquote>
+<p>以上哪种方式，一个库被全局上锁后，对立面任何一个表做字段操作，都会被锁住的</p>
+</blockquote>
+<p>即使没有全局加锁，有了表级锁，加字段也会遇到问题</p>
+<h3 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h3><p>MySQL有两种表级别的锁：一种是表锁、另一种是元数据锁( metadata lock，MDL )</p>
+<h4 id="表级锁的语法："><a href="#表级锁的语法：" class="headerlink" title="表级锁的语法："></a>表级锁的语法：</h4><p><code>lock tables xxx read/write</code></p>
+<p>例如 线程A执行了<code>lock table t1 read,t2 write</code> 效果是 <strong>包括A线程在内的所有线程对于t1表只可读，写被阻塞；t2表读写都被阻塞</strong></p>
+<p>lock tables 操作可以用 unlock tables 主动释放，也可以在客户端断开的时候自动释放。  </p>
+<blockquote>
+<p>该操作不仅阻塞其他线程的操作，也阻塞了当前线程的操作</p>
+</blockquote>
+<p>对于innoDB这种支持行锁的引擎，一般不使用<code>lock tables</code>命令控制并发，影响过大</p>
+<h4 id="另一种表级锁：MDL-metadata-lock"><a href="#另一种表级锁：MDL-metadata-lock" class="headerlink" title="另一种表级锁：MDL(metadata lock)"></a>另一种表级锁：<code>MDL(metadata lock)</code></h4><p>MDL在访问一个表的时候会自动加上，MDL的作用是，保证读写的正确性。当表做增删改查操作时，加MDL读锁；当对表结构变更的时候，加MDL写锁。</p>
+<ul>
+<li>读锁之间不互斥，多线程可对同一张表增删改查</li>
+<li>读写锁之间、写锁之间互斥。两个线程同时给一个表增加字段，则第二个需要等待第一个执行完才能继续</li>
+<li>MDL锁在语句执行开始时申请，事务结束后释放</li>
+</ul>
+<h4 id="如何给小锁安全的加字段"><a href="#如何给小锁安全的加字段" class="headerlink" title="如何给小锁安全的加字段"></a>如何给小锁安全的加字段</h4><ul>
+<li><p>解决长事务，当做DDL变更的表中正好在执行长事务，则从information_schema库的innodb_trx找到当前执行长事务，先kill掉长事务或者暂停DDL</p>
+</li>
+<li><p>比较理想的状态：修改表结构语句alter table可以设置等待时间，如果该时间内拿不到MDL锁，则该时间内拿不到MDL锁，则放弃执行，不会阻塞后面的语句</p>
+<p>MariaDB/ALiSQL已经支持 <code>DDL NOWAIT/WAIT n</code> 这个语法</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table tb1_name NOWAIT add column...</span><br><span class="line">alter table tb1_name WAIT N add column...</span><br></pre></td></tr></table></figure>
+<h3 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a>行锁</h3><h4 id="两阶段锁"><a href="#两阶段锁" class="headerlink" title="两阶段锁"></a>两阶段锁</h4><ul>
+<li><p>定义：在 InnoDB 事务中，行锁是在需要的时候才加上的，但并不是不需要了就立刻释放， 而是要等到事务结束时才释放</p>
+</li>
+<li><p>建议：如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放</p>
+</li>
+</ul>
+<h4 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h4><ul>
+<li>定义：当并发系统中不同线程出现循环资源依赖，涉及的线程都在等待别的线程释放资源时，就会导致这几个线程都进入无限等待的状态</li>
+<li>解决方案<ul>
+<li>通过参数 <code>innodb_lock_wait_timeout</code> 根据实际业务场景来设置超时时间，InnoDB 引擎默认值是50s</li>
+<li>发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数 <code>innodb_deadlock_detect</code> 设置为 on，表示开启这个逻辑（默认是开启状态）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="如何解决热点行更新导致的性能问题？"><a href="#如何解决热点行更新导致的性能问题？" class="headerlink" title="如何解决热点行更新导致的性能问题？"></a>如何解决热点行更新导致的性能问题？</h4><ul>
+<li>如果你能确保这个业务一定不会出现死锁，可以临时把死锁检测关闭掉。一般不建议采用</li>
+<li>控制并发度，对应相同行的更新，在进入引擎之前排队。这样在InnoDB内部就不会有大量的死锁检测工作了</li>
+<li>将热更新的行数据拆分成逻辑上的多行来减少锁冲突，但是业务复杂度可能会大大提高</li>
+</ul>
+<p>Innodb 行级锁是通过锁索引记录实现的，如果更新的列没建索引是会锁住整个表的。 </p>
+</div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/MySQL/">#MySQL</a><a href="/tags/Database/">#Database</a><a href="/tags/数据库/">#数据库</a></p></article></div><footer><div class="paginator"><a href="/2019/04/04/binary-tree-B-tree/" class="prev">PREV</a><a href="/2019/03/08/notes-on-network-protocol-7-layers/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+    clientID: 'abc8dd436b794dd57f1a',
+    clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
+    repo: 'shinhwaw.github.io',
+    owner: 'shinhwaw',
+    admin: ['shinhwaw'],
+    perPage: 100,
+    id: 'Fri Mar 08 2019 21:43:42 GMT+0800 GMT'.split('GMT')[0].replace(/\s/g, '-'),
+    distractionFreeMode: false,
+    pagerDirection: 'first'
+})
+
+gitalk.render('container')</script></footer></div><script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ["script","noscript","style","textarea","code","pre"]
+    }
+});
+</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-137034489-1",'auto');ga('send','pageview');</script><link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" media="screen" type="text/css"><script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script><script>$(function(){$('.datatable').dataTable( {"order": [[ 0, "desc" ]],"iDisplayLength": -1,"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]} );});</script></body></html>
