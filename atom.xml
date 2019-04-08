@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-07T13:39:15.601Z</updated>
+  <updated>2019-04-08T10:25:04.028Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>notes-on-network-protocol-7-layers</title>
+    <link href="http://yoursite.com/2019/04/08/notes-on-network-protocol-7-layers/"/>
+    <id>http://yoursite.com/2019/04/08/notes-on-network-protocol-7-layers/</id>
+    <published>2019-04-08T10:24:47.000Z</published>
+    <updated>2019-04-08T10:25:04.028Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="Network" scheme="http://yoursite.com/categories/Network/"/>
+    
+    
+      <category term="Network" scheme="http://yoursite.com/tags/Network/"/>
+    
+      <category term="网络协议" scheme="http://yoursite.com/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>IPA Sounds And Exmaples</title>
@@ -71,13 +91,13 @@
   </entry>
   
   <entry>
-    <title>Notes on Network Protocol</title>
-    <link href="http://yoursite.com/2019/03/07/notes-on-network-protocol/"/>
-    <id>http://yoursite.com/2019/03/07/notes-on-network-protocol/</id>
+    <title>Notes on Network Protocol Overview</title>
+    <link href="http://yoursite.com/2019/03/07/notes-on-network-protocol-overview/"/>
+    <id>http://yoursite.com/2019/03/07/notes-on-network-protocol-overview/</id>
     <published>2019-03-07T15:00:17.000Z</published>
-    <updated>2019-04-07T15:07:08.648Z</updated>
+    <updated>2019-04-08T10:21:35.456Z</updated>
     
-    <content type="html"><![CDATA[<p>网络协议大致框架<br><a id="more"></a></p><h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><ul><li><p>应用层</p><p>浏览器输入网址，DNS 查找目标 IP。HTTPS 协议打包请求信息。此处包含 HTTP 头和报文信息。</p></li><li><p>传输层</p><p>通过 socket 编程来实现 TCP ( 面向连接 ) 和 UDP 两种协议。TCP 头包含客户端和服务器监听端口。如果发生丢包，客户端会发包重试。</p></li><li><p>网络层</p><p>操作系统的网络层使用 IP 协议封装 IP 头，包括客户端和服务端 IP。</p></li><li><p>数据链路层</p><p>操作系统通过 ARP 协议查找网关 MAC，封装 MAC 头，包换客户端 MAC 和网关 MAC.</p></li><li><p>物理层</p><p>通过路由协议寻找目标服务器 IP 以及 MAC 地址</p></li></ul><h4 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h4><p>和客户端相反的方向，服务器校验 MAC 地址正确，取 MAC 头，然后交给操作系统网络层检验 IP ，取 IP 头，再交给传输层，即 TCP 层。这一层里服务端收到的每一个包都要原路返回回复给客户端。TCP 头中包含服务器的端口号，找到服务端的进程对请求处理（此处处理往往通过 RPC 即远程调用方式来实现不同进程间调用通信）。最后再将处理结果原路返回给客户端浏览器。</p>]]></content>
+    <content type="html"><![CDATA[<p>网络协议大致框架<br><a id="more"></a></p><h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><ul><li><p>应用层</p><p>浏览器输入网址，DNS 查找目标 IP。HTTPS 协议打包请求信息。此处包含 HTTP 头和报文信息。</p></li><li><p>传输层</p><p>通过 socket 编程来实现 TCP ( 面向连接 ) 和 UDP 两种协议。TCP 头包含客户端和服务器监听端口。如果发生丢包，客户端会发包重试。</p></li><li><p>网络层</p><p>操作系统的网络层使用 IP 协议封装 IP 头，包括客户端和服务端 IP。</p></li><li><p>数据链路层</p><p>操作系统通过 ARP 协议查找网关 MAC，封装 MAC 头，包括客户端 MAC 和网关 MAC.</p></li><li><p>物理层</p><p>通过路由协议寻找目标服务器 IP 以及 MAC 地址</p></li></ul><h4 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h4><p>和客户端相反的方向，服务器校验 MAC 地址正确，取 MAC 头，然后交给操作系统网络层检验 IP ，取 IP 头，再交给传输层，即 TCP 层。这一层里服务端收到的每一个包都要原路返回回复给客户端。TCP 头中包含服务器的端口号，找到服务端的进程对请求处理（此处处理往往通过 RPC 即远程调用方式来实现不同进程间调用通信）。最后再将处理结果原路返回给客户端浏览器。</p><h4 id="网络分层的理解"><a href="#网络分层的理解" class="headerlink" title="网络分层的理解"></a>网络分层的理解</h4><ul><li><strong>只要在网络上跑的包，都是完整的</strong>。<strong>可以有下层没上层，绝不可能有上层没下层</strong></li><li>二层设备收到的是整个网络包。包括 HTTP, TCP, IP, MAC都有。二层设备只把 MAC 头摘下来，看看到底是丢弃、转发、还是自己留着。二层设备是工作在数据链路层的设备，通常是交换机，可以通过地址表确定 MAC 地址和对应端口。如果都不存在会更新地址表。</li><li>三层设备就是把 MAC 头摘下来之后，再把 IP 头摘下来，看看到底是丢弃、转发、还是自己留着。三层设备是工作在网络层的设备，通常是指路由器。</li></ul><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190408174305.png" alt></p><h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><ul><li>IP 是地址，有定位功能； MAC 是身份证，误定位功能</li><li>CIDR 无类型域间选路。把 IP 分为网络号和主机号，中间斜杠 / 区分</li><li>IP 分公有 IP 和私有 IP</li></ul><h4 id="DHCP-Dynamic-Host-Configuration-Protocol"><a href="#DHCP-Dynamic-Host-Configuration-Protocol" class="headerlink" title="DHCP ( Dynamic Host Configuration Protocol )"></a>DHCP ( Dynamic Host Configuration Protocol )</h4><p>动态主机配置协议。新机器加入会发送一个广播包，里面封装了 MAC 头，IP 头，UDP 头，BOOTP 头，以及请求内容。MAC 地址是唯一的身份，可以确定是否需要分配新的 IP。DHCP server 会广播返回消息包。包括 MAC 头，IP 头，UDP 头，BOOTP 头，同时包含新 IP 地址的合法租用信息和其他配置信息。</p>]]></content>
     
     <summary type="html">
     
@@ -532,35 +552,6 @@
       <category term="哈希表" scheme="http://yoursite.com/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
     
       <category term="散列表" scheme="http://yoursite.com/tags/%E6%95%A3%E5%88%97%E8%A1%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Beauty Of Algorithms 16 Summary. Skiplist</title>
-    <link href="http://yoursite.com/2019/02/06/beauty-of-algorithms-16-summary-skiplist/"/>
-    <id>http://yoursite.com/2019/02/06/beauty-of-algorithms-16-summary-skiplist/</id>
-    <published>2019-02-05T16:45:30.000Z</published>
-    <updated>2019-03-31T15:02:57.208Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="跳表的概念"><a href="#跳表的概念" class="headerlink" title="跳表的概念"></a>跳表的概念</h3><p>对链表建立n级索引，例如每两个结点提取一个节点到上一层，称之为索引层。<br>图中的down表示down指针，指向下一级结点</p><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549354564189.png" alt><br><a id="more"></a></p><h3 id="跳表的时间复杂度"><a href="#跳表的时间复杂度" class="headerlink" title="跳表的时间复杂度"></a>跳表的时间复杂度</h3><p><strong>跳表的高度</strong></p><p>跳表的高度是log2n</p><p><strong>跳表的时间复杂度</strong></p><p>跳表中查询某个数据的时间复杂度是O(logn)</p><h3 id="跳表的空间复杂度及优化"><a href="#跳表的空间复杂度及优化" class="headerlink" title="跳表的空间复杂度及优化"></a><strong>跳表的空间复杂度及优化</strong></h3><p><strong>跳表的空间复杂度</strong></p><p>跳表的空间复杂度为O(n)</p><p><strong>优化时间复杂度</strong></p><p>如果链表有n个节点，每3或5个节点抽取抽出一个节点作为上一级索引的节点，</p><p>虽然跳表的空间复杂度仍然是O(n)，但和每2个节点抽取一次相比占用的内存空间少了很多。</p><h3 id="高效的动态插入和删除"><a href="#高效的动态插入和删除" class="headerlink" title="高效的动态插入和删除"></a>高效的动态插入和删除</h3><p><strong>时间复杂度</strong></p><p>跳表本质上就是链表，所以仅插作，插入和删除操时间复杂度就为O(1)，</p><p>但在实际情况中，要插入或删除某个节点，需要先查找到指定位置，而这个查找操作比较费时。</p><p>在跳表中查找操作的时间复杂度是O(logn)，因此跳表的插入和删除操作的是时间复杂度也是O(logn)。</p><p><strong>跳表索引动态更新</strong></p><p>当往跳表中插入数据的时候，可以选择同时将这个数据插入到部分索引层中，</p><p>可以通过随机函数来决定将这个节点插入到哪几级索引中，比如随机函数生成了值K，那就可以把这个节点添加到第1级到第K级索引中。</p><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549354676649.png" alt></p><h3 id="跳表代码实现"><a href="#跳表代码实现" class="headerlink" title="跳表代码实现"></a>跳表代码实现</h3><p><a href="https://github.com/wangzheng0822/algo/blob/master/java/17_skiplist/SkipList.java" target="_blank" rel="noopener">参考</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;跳表的概念&quot;&gt;&lt;a href=&quot;#跳表的概念&quot; class=&quot;headerlink&quot; title=&quot;跳表的概念&quot;&gt;&lt;/a&gt;跳表的概念&lt;/h3&gt;&lt;p&gt;对链表建立n级索引，例如每两个结点提取一个节点到上一层，称之为索引层。&lt;br&gt;图中的down表示down指针，指向下一级结点&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/1549354564189.png&quot; alt&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Algorithms" scheme="http://yoursite.com/categories/Algorithms/"/>
-    
-    
-      <category term="Algorithms" scheme="http://yoursite.com/tags/Algorithms/"/>
-    
-      <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="SkipList" scheme="http://yoursite.com/tags/SkipList/"/>
-    
-      <category term="跳表" scheme="http://yoursite.com/tags/%E8%B7%B3%E8%A1%A8/"/>
     
   </entry>
   
