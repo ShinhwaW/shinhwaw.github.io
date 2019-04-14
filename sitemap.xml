@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2019/04/14/notes-on-network-protocol-udp-and-tcp/</loc>
+    <loc>http://yoursite.com/2019/03/15/notes-on-network-protocol-udp-and-tcp/</loc>
     
-    <lastmod>2019-04-14T14:10:36.613Z</lastmod>
+    <lastmod>2019-04-14T14:12:22.113Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/03/08/notes-on-network-protocol-7-layers/</loc>
+    
+    <lastmod>2019-04-14T14:11:45.011Z</lastmod>
     
   </url>
   
@@ -12,13 +19,6 @@
     <loc>http://yoursite.com/2019/03/07/notes-on-network-protocol-overview/</loc>
     
     <lastmod>2019-04-14T14:09:06.246Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/03/08/notes-on-network-protocol-7-layers/</loc>
-    
-    <lastmod>2019-04-14T14:05:14.385Z</lastmod>
     
   </url>
   
@@ -184,7 +184,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/02/07/beauty-of-algorithms-17-summary-hash-table/</loc>
+    <loc>http://yoursite.com/2019/02/01/beauty-of-algorithms-11-summary-sorting-1/</loc>
     
     <lastmod>2019-03-31T15:02:57.210Z</lastmod>
     
@@ -205,7 +205,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/02/01/beauty-of-algorithms-11-summary-sorting-1/</loc>
+    <loc>http://yoursite.com/2019/02/07/beauty-of-algorithms-17-summary-hash-table/</loc>
     
     <lastmod>2019-03-31T15:02:57.210Z</lastmod>
     
