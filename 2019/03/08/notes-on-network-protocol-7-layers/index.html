@@ -59,6 +59,77 @@
 <h3 id="ICMP-协议的格式"><a href="#ICMP-协议的格式" class="headerlink" title="ICMP 协议的格式"></a>ICMP 协议的格式</h3><p><code>ICMP</code>全称<code>Internet Control Message Protocol</code>，互联网控制报文协议。是封装在<code>IP</code>报文里面的。</p>
 <p><strong>ICMP</strong>属于网络层(IP)协议。 发送不涉及到传输层， 没有端口的概念。</p>
 <h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190413220937.png" alt></p>
+<h3 id="MAC-头和-IP-头的细节"><a href="#MAC-头和-IP-头的细节" class="headerlink" title="MAC 头和 IP 头的细节"></a>MAC 头和 IP 头的细节</h3><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190414204325.png" alt></p>
+<p>任何一台机器，当腰访问另一个IP地址的时候， 会先判断, 这个目标 IP 地址，和当前机器的 IP 地址，是否在同一个网段.。(通过CIDR, 子网掩码)</p>
+<ul>
+<li>如果是同一个网段：<strong>不经过网关</strong>直接将源地址和目标地址放入<code>IP</code>头中。然后通过 ARP 获得 MAC 地址， 将源 <code>MAC</code> 和目的 <code>MAC</code> 放入 <code>MAC</code> 头中，发出去就可以了。</li>
+<li>如果不是同一个网段：需要<strong>发往默认网关GateWay</strong>。Gateway 的地址一定是和源 IP 地址是一个网段的。往往不是第一个，就是第二个。例如 <code>192.168.1.0/24</code> 这个网段，Gateway 往往会是<code>192.168.1.1/24</code> 或者 <code>192.168.1.2/24</code>。(通过 ARP 获得网关 MAC 地址, 然后发送)</li>
+</ul>
+<p>网关往往是一个路由器，是一个三层转发的设备(网络层)。</p>
+<ul>
+<li>一个路由器有多个网口</li>
+<li>一台服务器做这个网关则会有多个网卡, 其中一个网卡是和源IP同网段的</li>
+</ul>
+<h3 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h3><p>路由器是一台设备，它有五个网口或者网卡，相当于有五只手，分别连着五个局域网。每只手的 <code>IP</code>地址都和局域网的<code>IP</code>地址相同的网段，每只手都是它握住的那个局域网的网关。</p>
+<p>任何一个想发往其他局域网的包，都会到达其中一只手，被拿进来，拿下 MAC 头和 IP 头，看看，根据自己的路由算法，选择另一只手，加上 IP 头和 MAC 头，然后扔出去。</p>
+<blockquote>
+<p>MAC 地址是一个局域网内才有效的地址。<code>MAC</code>地址只要过网关，就必定会改变，因为已经换了局域网。两者主要的区别在于<code>IP</code>地址是否改变。不改变<code>IP</code>地址的网关，我们称为转发网关；改变<code>IP</code>地址的网关，我们称为<code>NAT</code>网关。</p>
+</blockquote>
+<ul>
+<li><p>静态路由</p>
+<p>配置复杂的策略路由, 控制转发策略</p>
+</li>
+<li><p>动态路由</p>
+<ul>
+<li>距离矢量算法<strong>BGP</strong></li>
+<li>链路状态算法<strong>OSPF</strong></li>
+</ul>
+</li>
+</ul>
+<p>路由器是一台网络设备, 有多张网卡. 当一个口的网络包送到路由器时，它会根据一个本地的转发信息库，来决定如何正确地转发流量。这个转发信息库通常被称为<strong>路由表</strong>。</p>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>如果离开本局域网，就需要经过网关，网关是路由器的一个网口</li>
+<li>路由器是一个三层设备，里面有如何寻找下一跳的规则</li>
+<li>转发网关, <strong>MAC变 IP不变</strong></li>
+<li>NAT网关, <strong>IP变</strong></li>
+</ul>
+<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><p>传输层里比较重要的两个协议， <a href>TCP 和 UDP</a></p>
+<h4 id="TCP-和-UDP-区别"><a href="#TCP-和-UDP-区别" class="headerlink" title="TCP 和 UDP 区别"></a>TCP 和 UDP 区别</h4><ul>
+<li><p>面向连接</p>
+<p>在互通之前, 面向连接的协议会先<strong>建立连接</strong>。<code>TCP</code>会三次握手，<code>UDP</code>不会</p>
+<blockquote>
+<p>是为了在客户端和服务端维护连接,，而<strong>建立一定的数据结构来维护双方交互的状态, 用这样的数据结构来保证所谓的面向连接的特性</strong>。</p>
+</blockquote>
+</li>
+<li><p>可靠性</p>
+<ul>
+<li>TCP提供可靠交付, 通过<code>TCP</code>连接传输的数据，无差错、不丢失、不重复、并且按序到达</li>
+<li><code>IP</code>包没有任何可靠性。<code>UDP</code>继承了<code>IP</code>包的特性, 不保证不丢失, 不保证按顺序到达</li>
+</ul>
+</li>
+<li>传输<ul>
+<li><code>TCP</code>是面向字节流的。发送的时候发的是一个流，没头没尾。IP 包可不是一个流，而是一个个的<code>IP</code>包。之所以变成了流, 这也是<code>TCP</code>自己的状态维护做的事情</li>
+<li><code>UDP</code>继承了<code>IP</code>的特性, 基于数据报的, 一个一个地发, 一个一个地收</li>
+</ul>
+</li>
+<li>拥塞控制<ul>
+<li><code>TCP</code>是可以拥塞控制的。它意识到包丢弃了或者网络的环境不好了，就会根据情况调整自己的行为，看看是不是发快了，要不要发慢点</li>
+<li><code>UDP</code>应用让我发，我就发，管它洪水滔天</li>
+</ul>
+</li>
+<li>有状态服务<ul>
+<li><code>TCP</code>其实是一个有状态服务。精确地记着发送了没有，接收到没有，发送到哪个了，应该接收哪个了，错一点儿都不行</li>
+<li><code>UDP</code>是无状态服务, 发出去就发出去了</li>
+</ul>
+</li>
+</ul>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p><code>MAC</code>层定义了本地局域网的传输行为,<code>IP</code>层定义了整个网络端到端的传输行为，这两层基本定义了这样的基因：</p>
+<p><strong>网络传输</strong>是以<strong>包</strong>为单位的</p>
+<ul>
+<li>二层传输叫<strong>帧</strong></li>
+<li>网络层叫<strong>包</strong></li>
+<li>传输层叫<strong>段</strong></li>
+</ul>
 </div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Network/">#Network</a><a href="/tags/网络协议/">#网络协议</a></p></article></div><footer><div class="paginator"><a href="/2019/03/08/notes-on-MySQL-locking/" class="prev">PREV</a><a href="/2019/03/07/notes-on-network-protocol-overview/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
     clientID: 'abc8dd436b794dd57f1a',
     clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
