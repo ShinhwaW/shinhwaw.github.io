@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-14T14:10:00.337Z</updated>
+  <updated>2019-04-14T14:10:36.613Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Notes On Network Protocol UDP AND TCP</title>
+    <title>Notes On Network Protocol UDP and TCP</title>
     <link href="http://yoursite.com/2019/04/14/notes-on-network-protocol-udp-and-tcp/"/>
     <id>http://yoursite.com/2019/04/14/notes-on-network-protocol-udp-and-tcp/</id>
     <published>2019-04-14T14:06:44.000Z</published>
-    <updated>2019-04-14T14:10:00.337Z</updated>
+    <updated>2019-04-14T14:10:36.613Z</updated>
     
     <content type="html"><![CDATA[<p>UDP 和 TCP 详解 from <a href="https://time.geekbang.org/column/intro/85" target="_blank" rel="noopener">极客时间 - 趣谈网络协议</a><br><a id="more"></a></p>]]></content>
     
