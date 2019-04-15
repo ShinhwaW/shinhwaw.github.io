@@ -1,4 +1,208 @@
-<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Notes On Network Protocol UDP and TCP · Shinhwa's Site</title><meta name="description" content="Notes On Network Protocol UDP and TCP - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Notes On Network Protocol UDP and TCP</h1><div class="post-info">Mar 15, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Network/" class="post-category">#Network</a></div><div class="post-content"><p>UDP 和 TCP 详解 from <a href="https://time.geekbang.org/column/intro/85" target="_blank" rel="noopener">极客时间 - 趣谈网络协议</a><br><a id="more"></a></p>
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Notes On Network Protocol UDP and TCP · Shinhwa's Site</title><meta name="description" content="Notes On Network Protocol UDP and TCP - Shinhwa"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/avatar.jpg"><link rel="stylesheet" href="/css/nella.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Shinhwa's Site"><script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li><li class="nav-list-item"><a href="/search/" target="_self" class="nav-list-link">SEARCH</a></li><li class="nav-list-item"><a href="/search" target="_self" class="nav-list-link search"></a></li></ul></header><main class="container"></main><div class="post"><article class="post-block"><h1 class="post-title">Notes On Network Protocol UDP and TCP</h1><div class="post-info">Mar 15, 2019<span class="categories"><i class="fa fa-bookmark" aria-hidden="true"></i></span><a href="/categories/Network/" class="post-category">#Network</a></div><div class="post-content"><p>UDP 和 TCP from <a href="https://time.geekbang.org/column/intro/85" target="_blank" rel="noopener">极客时间 - 趣谈网络协议</a><br><a id="more"></a></p>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><h4 id="UDP-包头格式"><a href="#UDP-包头格式" class="headerlink" title="UDP 包头格式"></a>UDP 包头格式</h4><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190415154349.png" alt></p>
+<blockquote>
+<p><code>IP</code>头里面有个8为协议, 里面会存放, 数据里面到底是<code>TCP</code>还是<code>UDP</code>。处理完<strong>传输层</strong>的事情, <strong>内核的事情基本就干完了</strong>, 里面的数据应该交给应用程序自己去处理。<strong>根据端口号, 将数据交给响应的应用程序</strong>。</p>
+</blockquote>
+<h4 id="UDP-的三大特点"><a href="#UDP-的三大特点" class="headerlink" title="UDP 的三大特点"></a>UDP 的三大特点</h4><ul>
+<li>沟通简单, 没有复杂的数据结构, 处理逻辑, 包头字段. 相信网络通路默认就是很容易送达的，不容易被丢弃的。</li>
+<li>轻信他人, 它不会建立连接，虽然有端口号，但是监听在这个地方，谁都可以传给他数据，他也可以传给任何人数据，甚至可以同时传给多个人数据。</li>
+<li>愣头青, 做事不懂权变。它不会根据网络的情况进行发包的拥塞控制，无论网络丢包丢成啥样了，它该怎么发还怎么发。</li>
+</ul>
+<h4 id="UDP的三大使用场景"><a href="#UDP的三大使用场景" class="headerlink" title="UDP的三大使用场景"></a>UDP的三大使用场景</h4><ul>
+<li>需要资源少，在网络情况比较好的内网，或者对于丢包不敏感的应用。<ul>
+<li><code>DHCP</code>就是基于<code>UDP</code>协议的(广播形式)。一般的获取 IP 地址都是内网请求，而且一次获取不到 IP 又没事，过一会儿还有机会。</li>
+<li><code>PXE</code>操作系统镜像的下载使用的<code>TFTP</code>，这个也是基于 UDP 协议。</li>
+</ul>
+</li>
+<li>不需要一对一沟通，建立连接，而是可以广播的应用。<ul>
+<li><code>UDP</code>不面向连接, 使得可以继承广播或多播协议。</li>
+<li><code>D</code>类地址(组播地址), 使用这个地址, 可以将包组播给一批机器。当一台机器上的某个进程想监听某个组播地址的时候，需要发送 IGMP 包，所在网络的路由器就能收到这个包，知道有个机器上有个进程在监听这个组播地址。当路由器收到这个组播地址的时候，会将包转发给这台机器，这样就实现了跨路由器的组播。</li>
+</ul>
+</li>
+<li>需要处理速度快，时延低，可以容忍少数丢包，但是要求即便网络拥塞，也毫不退缩，一往无前的时候。</li>
+</ul>
+<blockquote>
+<p>如果实现的应用需要有自己的连接策略, 可靠保证, 时延要求, 使用<code>UDP</code>, 然后在应用层实现这些是再好不过了。</p>
+</blockquote>
+<h4 id="UDP使用的五个例子"><a href="#UDP使用的五个例子" class="headerlink" title="UDP使用的五个例子"></a>UDP使用的五个例子</h4><ul>
+<li><p>网页或者APP的访问</p>
+<p>HTTP 协议是基于 TCP 的，建立连接都需要多次交互，对于时延比较大的目前主流的移动互联网来讲，建立一次连接需要的时间会比较长，然而既然是移动中，TCP 可能还会断了重连，也是很耗时的。而且目前的 HTTP 协议，往往采取多个数据通道共享一个连接的情况，这样本来为了加快传输速度，但是 TCP 的严格顺序策略使得哪怕共享通道，前一个不来，后一个和前一个即便没关系，也要等着，时延也会加大。</p>
+<p><code>QUIC</code>（全称Quick UDP Internet Connections，快速 UDP 互联网连接）是<code>Google</code>提出的一种基于<code>UDP</code>改进的通信协议, 目的是降低网络通信的延迟, 提供更好的用户互动体验。</p>
+</li>
+<li><p>流媒体协议</p>
+<p>直播协议多使用<code>RTMP</code>。 <code>RTMP</code>协议也是基于<code>TCP</code>的。</p>
+<p>很多直播应用，都基于<code>UDP</code>实现了自己的视频传输协议。</p>
+<p>网络层不好, 应用选择性丢帧。</p>
+</li>
+<li><p>实时游戏</p>
+<p>在异步<code>IO</code>机制引入之前, <code>UDP</code>尝尝是应对海量客户端链接的策略。</p>
+<p>游戏对实时要求较为严格的情况下，采用自定义的可靠 UDP 协议，自定义重传策略，能够把丢包产生的延迟降到最低，尽量减少网络问题对游戏性造成的影响。</p>
+</li>
+<li><p>IoT 物联网</p>
+<p>物联网领域终端资源少, 维护<code>TCP</code>协议代价太大. 物联网对实时性要求也很高.</p>
+<p><code>Google</code>推出的物联网通信协议<code>Thread</code>就是基于<code>UDP</code>协议的</p>
+</li>
+<li><p>移动通信领域</p>
+<p>在<code>4G</code>王国利, 移动流量上网的数据面对的协议<code>GTP-U</code>是基于<code>UDP</code>的。<code>GTP</code>协议本身就包含复杂的手机上线下线的通信协议。</p>
+</li>
+</ul>
+<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><blockquote>
+<p><code>TCP</code>天然认为网络环境是恶劣的，丢包，乱序，重传，拥塞都是常用的事情，一言不合就可能送达不到了，<strong>因此要从算法层面来保证可靠性</strong>。</p>
+</blockquote>
+<h4 id="TCP-包头格式"><a href="#TCP-包头格式" class="headerlink" title="TCP 包头格式"></a>TCP 包头格式</h4><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190415155518.png" alt></p>
+<p><strong>序号</strong>：解决乱序问题，确认哪个先来哪个后到。</p>
+<p><strong>确认序号</strong>：确认发出去的包，如果没有收到就应该重新发送，知道送达。<strong>解决不丢包的问题</strong>。</p>
+<p><strong>TCP 状态位</strong></p>
+<ul>
+<li><code>SYN</code>发起一个链接</li>
+<li><code>ACK</code>是回复</li>
+<li><code>RST</code>重新连接</li>
+<li><code>FIN</code>结束链接</li>
+</ul>
+<blockquote>
+<p><code>TCP</code>是面向连接的，因而双方要维护连接的状态，这些<strong>带状态位的包的发送，会引起双方的状态变更</strong>。<strong>就像人与人之间的信任会经过多次交互才能建立</strong>。</p>
+</blockquote>
+<p><strong>窗口大小(流量控制)</strong>：<code>TCP</code>要做流量控制, 通信双方各声明一个窗口，标识自己当前能够的处理能力，别发送的太快，撑死我，也别发的太慢，饿死我。</p>
+<p><strong>拥塞控制</strong>：<code>TCP</code>拥塞控制。控制自己，也即<strong>控制发送速度</strong>。不能改变世界，就改变自己。</p>
+<h4 id="TCP-特点"><a href="#TCP-特点" class="headerlink" title="TCP 特点"></a>TCP 特点</h4><ul>
+<li>顺序问题，稳重不乱</li>
+<li>丢包问题，承诺靠谱</li>
+<li>连接维护，有始有终</li>
+<li>流量控制，把握分寸</li>
+<li>拥塞控制，知进知退</li>
+</ul>
+<h3 id="TCP-三次握手"><a href="#TCP-三次握手" class="headerlink" title="TCP 三次握手"></a>TCP 三次握手</h3><p><strong>请求-&gt;应答-&gt;应答之应答</strong></p>
+<ul>
+<li>A 发起一个连接请求<ul>
+<li>第一个请求杳无音信<ul>
+<li>包丢了</li>
+<li>包饶弯路, 超时了</li>
+<li>B没有响应, 不想和我连接</li>
+</ul>
+</li>
+<li>再次发送</li>
+<li>终于到达 B, A 暂时还不知道</li>
+</ul>
+</li>
+<li>B 收到了请求包, 知道了 A 的存在, 知道 A 要和它建立链接. 应答<ul>
+<li>B 不乐意建立连接, A 会重试一阵后放弃, 连接建立失败</li>
+<li>B 乐意建立链接, 则会发送应答包给 A<ul>
+<li>不能认为连接建立好<ul>
+<li>应答包会丢失</li>
+<li>应答包会饶弯路</li>
+<li>A 已经挂了</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>B 发送的应答包可能会发送多次, 但是只要一次到达 A, <strong>A 就认为连接已经建立了</strong>, <strong>对于A来说, 他的消息有去有回</strong></li>
+</ul>
+</li>
+<li>A 给 B 发送应答之应答<ul>
+<li>B 也在等待这个消息, 才能确认连接的建立, 只有等到了这个消息, 对于 B 来讲, 才算他的<strong>消息有去有回</strong></li>
+<li><strong>应答之应答</strong>也会丢失, 绕路, 甚至 B 挂了. 只要<strong>双方的消息都有去有回, 就基本可以了</strong>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>需要双方发送的消息都有去有回</strong>.</p>
+<p>大部分情况下, A 和 B 建立了连接之后, A 会马上发送数据, 一旦 A 发送数据就解决了问题.</p>
+<ul>
+<li><strong>应答之应答</strong>丢失. 当 A 连续发送数据的时候, B 可以认为这个连接已经建立.</li>
+<li>B 挂了. A 发送的数据, 会报错, 说 B 不可达, A 就知道 B 出事情了.</li>
+</ul>
+<p><strong>keepalive</strong>, 即使没有真实的数据包, 也有<strong>探活包</strong>.</p>
+<blockquote>
+<p>如果 A 长时间不发包, B 可以主动关闭。</p>
+</blockquote>
+<h4 id="为什么两次握手不行"><a href="#为什么两次握手不行" class="headerlink" title="为什么两次握手不行"></a>为什么两次握手不行</h4><ul>
+<li>A 和 B 原来建立了连接, 做了简单通信, 结束了连接<ul>
+<li>最早 A 第一次发起<strong>请求</strong>的时候, 重复发了很多次包, 如果这个时候<strong>请求</strong>到达. B 会认为这也是一个正常的请求的话, 因此<strong>建立了连接</strong>(如果两次握手就建立链接), 就没有终结了.</li>
+</ul>
+</li>
+</ul>
+<h4 id="TCP-包的序号问题"><a href="#TCP-包的序号问题" class="headerlink" title="TCP 包的序号问题"></a>TCP 包的序号问题</h4><ul>
+<li>A 要告诉 B, 发起包的<strong>序号</strong></li>
+<li>B 同样要高速 A, 发起包的<strong>序号</strong></li>
+</ul>
+<p><strong>序号不能从1开始</strong>, 这样往往会冲突.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">A 发送 1 2 3. </span><br><span class="line"></span><br><span class="line">丢了 或者 绕路了.</span><br><span class="line"></span><br><span class="line">A 重新发送 1 2 (这次不发3）</span><br><span class="line"></span><br><span class="line">但是上次绕路的3 又回来了, 发给了B. B 就会错误的认为是下一个包. </span><br><span class="line"></span><br><span class="line"># 不能每次从1开始</span><br></pre></td></tr></table></figure>
+<ul>
+<li>每个连接都要有不同的序号.</li>
+<li>这个序号的起始序号是随着时间变化的.<ul>
+<li>32位的计数器, 每<code>4ms</code>加一.如果到重复, 需要4个多小时, 绕路的包早都死了. 以为<code>IP</code>包头里有个<code>TTL</code>, 也即生存时间.</li>
+</ul>
+</li>
+</ul>
+<h4 id="连接连接过程的状态变化"><a href="#连接连接过程的状态变化" class="headerlink" title="连接连接过程的状态变化"></a>连接连接过程的状态变化</h4><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190415165124.png" alt></p>
+<h3 id="TCP-四次挥手"><a href="#TCP-四次挥手" class="headerlink" title="TCP 四次挥手"></a>TCP 四次挥手</h3><ul>
+<li>A: B 不玩了</li>
+<li>B: 你不玩了, 我知道了</li>
+</ul>
+<p>B 不能在 ACK 的时候, 直接关闭. <strong>有可能A是发完了最后的数据就准备不玩了, 但是 B 还没做完自己的事情, 还是可能在发送数据的</strong>, 所以称为<strong>半关闭</strong>的状态.</p>
+<p>A 可以选择不再接收数据, 也可以选择最后再接收一段数据, 等待 B 也主动关闭.</p>
+<ul>
+<li>B: A 好啊, 我也不玩了, 拜拜</li>
+<li>A: 好的, 拜拜</li>
+</ul>
+<h4 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h4><ul>
+<li>A : B 不玩了</li>
+<li>B: 你不玩了, 我知道了</li>
+<li>A 没收到回复<ul>
+<li>重新发送”不玩了”</li>
+</ul>
+</li>
+<li>A 收到回复<ul>
+<li>A 跑路了, B 发起的请求得不到A的应答</li>
+<li>B 跑路了, A 不知道 B 是还有事情要处理, 还是过一会会发送结束</li>
+</ul>
+</li>
+</ul>
+<h4 id="断开时序图"><a href="#断开时序图" class="headerlink" title="断开时序图"></a>断开时序图</h4><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190415165210.png" alt></p>
+<ul>
+<li><p>A : B 不玩了, <strong>FIN-WAIT-1</strong></p>
+</li>
+<li><p>B: 你不玩了, 我知道了 <strong>CLOSE-WAIT</strong></p>
+</li>
+<li><p>A 收到回复 <strong>FIN-WAIT-2</strong></p>
+<ul>
+<li>B 跑路了, <code>Linux</code>调整<code>tcp_fin_timeout</code>这个参数, 设置超时时间</li>
+</ul>
+</li>
+<li><p>B: A 好啊, 我也不玩了, 拜拜 <strong>LAST_ACK</strong></p>
+</li>
+<li>A: 好的, 拜拜<ul>
+<li>发送 ACK, <strong>FIN-WAIT-2</strong>结束.</li>
+<li>如果这个 ACK, B 收不到<ul>
+<li>B 重新发送一个 <code>A 好啊, 我也不玩了</code>, 如果这个时候 A 已经跑路了, B 就再也收不到 ACK 了</li>
+</ul>
+</li>
+<li><code>TCP</code>协议要求 A 最后等待一段时间<strong>TIME-WAIT</strong>, 这个时间要足够长到如果 B 没收到 ACK, B说 <code>A 好啊, 我也不玩了</code>会重发的<ul>
+<li>A 会重新发一个 ACK 并且足够时间到达 B</li>
+</ul>
+</li>
+<li>如果 A 直接跑路, 端口就直接空出来了, 但是 B 不知道, B 原来发过的很多包可能都还在路上. 如果 A 的端口被一个新的应用占用了, 就会收到 B 发过来的包(虽然需要会重新生成). <strong>双保险, 为了防止混乱, 需要等足够长的时间, 等待原来B发送的所有包都死翘翘, 再空出端口</strong>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>等待时间</strong>：等待时间设为<code>2MSL</code></p>
+<blockquote>
+<p><strong>MSL 是 Maximum Segment Liftetime</strong>, 报文最大生存时间. 它是任何报文在网络上存在的最长时间, 超过这个时间报文将被丢弃.</p>
+<p><code>IP</code>头中有一个<code>TTL</code>, 是<code>IP</code>数据报可以经过的<strong>最大路由数</strong>, 每经过一个处理他的路由器此值就减1, 当此值为0则数据报将被丢弃, 同时发送<code>ICMP</code>报文通知主机.</p>
+<p>协议规定<code>MSL</code>为2分钟, 实际应用中常用的是30秒, 1分钟和2分钟等.</p>
+</blockquote>
+<p><strong>超过了 2MSL</strong></p>
+<ul>
+<li>按照 TCP 的原理, B 重发<code>FIN</code></li>
+<li>A 收到<code>FIN</code>, 表示超过时间了. 直接发送 <code>RST</code></li>
+</ul>
+<h4 id="TCP-状态机"><a href="#TCP-状态机" class="headerlink" title="TCP 状态机"></a>TCP 状态机</h4><p><img src="https://shinhwa-1258620884.cos.ap-beijing.myqcloud.com/image/20190415165717.png" alt></p>
+<ul>
+<li><p>数字是连接状态变化</p>
+</li>
+<li><p>虚线是 A 的连接</p>
+</li>
+<li>实线是 B 的连接</li>
+</ul>
 </div><p class="post-tags"><i class="fa fa-tags" aria-hidden="true"></i><a href="/tags/Network/">#Network</a><a href="/tags/网络协议/">#网络协议</a></p></article></div><footer><div class="paginator"><a href="/2019/04/04/binary-tree-B-tree/" class="prev">PREV</a><a href="/2019/03/08/notes-on-MySQL-locking/" class="next">NEXT</a></div><div id="container"></div><link rel="stylesheet" href="/gitalk/gitalk.css"><script src="/gitalk/gitalk.min.js"></script><script>var gitalk = new Gitalk({
     clientID: 'abc8dd436b794dd57f1a',
     clientSecret: 'abb0140fec65a00f96066e5c84eee8a7eb8818a4',
