@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/04/01/notes-on-network-protocol-socket/</loc>
+    
+    <lastmod>2019-04-16T12:53:00.713Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/04/16/leetcode-169-majority-element/</loc>
     
     <lastmod>2019-04-16T09:05:52.571Z</lastmod>
@@ -128,14 +135,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/01/30/beauty-of-algorithms-9-summary-queue/</loc>
+    <loc>http://yoursite.com/2019/01/27/beauty-of-algorithms-6-summary-linked-list/</loc>
     
     <lastmod>2019-03-31T15:02:57.231Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/01/27/beauty-of-algorithms-6-summary-linked-list/</loc>
+    <loc>http://yoursite.com/2019/01/30/beauty-of-algorithms-9-summary-queue/</loc>
     
     <lastmod>2019-03-31T15:02:57.231Z</lastmod>
     
@@ -247,14 +254,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/02/19/leetcode-617-merge-two-binary-trees/</loc>
+    <loc>http://yoursite.com/2019/02/02/beauty-of-algorithms-12-summary-sorting-2/</loc>
     
     <lastmod>2019-03-31T15:02:57.204Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/02/02/beauty-of-algorithms-12-summary-sorting-2/</loc>
+    <loc>http://yoursite.com/2019/02/19/leetcode-617-merge-two-binary-trees/</loc>
     
     <lastmod>2019-03-31T15:02:57.204Z</lastmod>
     
